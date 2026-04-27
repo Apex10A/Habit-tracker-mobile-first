@@ -35,20 +35,20 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
     return (
       <div
         data-testid={`habit-card-${slug}`}
-        className="p-4 border border-red-200 bg-red-50 rounded-lg shadow-sm flex flex-col gap-4"
+        className="p-4 border border-danger bg-red-50 rounded-lg shadow-sm flex flex-col gap-4"
       >
-        <p className="text-red-800 font-medium text-center">Delete this habit?</p>
+        <p className="text-danger font-medium text-center">Delete this habit?</p>
         <div className="flex gap-2">
           <button
             onClick={() => setIsDeleting(false)}
-            className="flex-1 py-2 px-4 bg-white border border-gray-200 rounded text-gray-700 hover:bg-gray-50 transition-colors"
+            className="flex-1 py-2 px-4 bg-surface border border-border-base rounded text-secondary-text hover:bg-background transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={handleConfirmDelete}
             data-testid="confirm-delete-button"
-            className="flex-1 py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition-colors font-medium"
+            className="flex-1 py-2 px-4 bg-danger text-white rounded hover:opacity-90 transition-colors font-medium"
           >
             Delete
           </button>
@@ -61,19 +61,19 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
     <div
       data-testid={`habit-card-${slug}`}
       className={`p-4 border rounded-lg shadow-sm transition-all ${
-        isCompletedToday ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'
+        isCompletedToday ? 'bg-green-50 border-success' : 'bg-surface border-border-base'
       }`}
     >
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3
             className={`text-lg font-bold ${
-              isCompletedToday ? 'text-green-800 line-through' : 'text-gray-900'
+              isCompletedToday ? 'text-success line-through' : 'text-foreground'
             }`}
           >
             {habit.name}
           </h3>
-          <p className="text-sm text-gray-500">{habit.description}</p>
+          <p className="text-sm text-secondary-text">{habit.description}</p>
         </div>
         <div className="flex flex-col items-end">
           <span
@@ -82,7 +82,7 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
           >
             {streak}🔥
           </span>
-          <span className="text-xs text-gray-400 uppercase tracking-wider">Streak</span>
+          <span className="text-xs text-secondary-text uppercase tracking-wider">Streak</span>
         </div>
       </div>
 
@@ -92,8 +92,8 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
           data-testid={`habit-complete-${slug}`}
           className={`flex-1 py-2 px-4 rounded font-medium transition-colors ${
             isCompletedToday
-              ? 'bg-green-600 text-white hover:bg-green-700'
-              : 'bg-blue-600 text-white hover:bg-blue-700'
+              ? 'bg-success text-white hover:opacity-90'
+              : 'bg-accent text-white hover:opacity-90'
           }`}
         >
           {isCompletedToday ? 'Completed' : 'Complete Today'}
@@ -101,7 +101,7 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
         <button
           onClick={onEdit}
           data-testid={`habit-edit-${slug}`}
-          className="p-2 text-gray-600 hover:bg-gray-100 rounded transition-colors"
+          className="p-2 text-secondary-text hover:bg-background rounded transition-colors"
           title="Edit Habit"
         >
           <svg
@@ -122,7 +122,7 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
         <button
           onClick={() => setIsDeleting(true)}
           data-testid={`habit-delete-${slug}`}
-          className="p-2 text-red-600 hover:bg-red-50 rounded transition-colors"
+          className="p-2 text-danger hover:bg-red-50 rounded transition-colors"
           title="Delete Habit"
         >
           <svg

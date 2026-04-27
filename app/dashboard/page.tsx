@@ -61,24 +61,24 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8" data-testid="dashboard-page">
-      <header className="flex justify-between items-center mb-8 max-w-4xl mx-auto">
+    <div className="min-h-screen bg-background p-4 md:p-8" data-testid="dashboard-page">
+      <header className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center mb-8 max-w-4xl mx-auto">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">Welcome back, {session?.email}</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Dashboard</h1>
+          <p className="text-secondary-text text-sm md:text-base">Welcome back, {session?.email} 👋</p>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-2 md:gap-4">
           <button
             onClick={() => setShowForm(true)}
             data-testid="create-habit-button"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors font-medium"
+            className="flex-1 md:flex-none bg-accent text-white px-4 py-2 rounded-lg hover:opacity-90 transition-colors font-medium text-sm md:text-base"
           >
             Create Habit
           </button>
           <button
             onClick={handleLogout}
             data-testid="auth-logout-button"
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+            className="bg-danger/10 text-danger px-4 py-2 rounded-lg hover:bg-danger/20 transition-colors text-sm md:text-base font-medium"
           >
             Logout
           </button>
