@@ -7,12 +7,14 @@ import { getHabits } from '@/lib/habits';
 import type { Session } from '@/types/auth';
 import type { Habit } from '@/types/habit';
 import HabitForm from '@/components/habits/HabitForm';
+import HabitCard from '@/components/habits/HabitCard';
 
 export default function DashboardPage() {
   const [session, setSession] = useState<Session | null>(null);
   const [habits, setHabits] = useState<Habit[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
   const router = useRouter();
 
   const loadHabits = (userId: string) => {
@@ -27,6 +29,7 @@ export default function DashboardPage() {
       router.push('/login');
       return;
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSession(currentSession);
     loadHabits(currentSession.userId);
     setLoading(false);
@@ -36,11 +39,17 @@ export default function DashboardPage() {
     logout();
   };
 
-  const handleCreateSuccess = () => {
+  const handleSuccess = () => {
     if (session) {
       loadHabits(session.userId);
     }
     setShowForm(false);
+    setEditingHabit(null);
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+    setEditingHabit(null);
   };
 
   if (loading) {
@@ -76,11 +85,12 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      {showForm && session && (
+      {(showForm || editingHabit) && session && (
         <HabitForm
           userId={session.userId}
-          onSuccess={handleCreateSuccess}
-          onCancel={() => setShowForm(false)}
+          habitToEdit={editingHabit || undefined}
+          onSuccess={handleSuccess}
+          onCancel={handleCancel}
         />
       )}
 
@@ -88,23 +98,20 @@ export default function DashboardPage() {
         <section className="bg-white rounded-lg shadow p-6">
           <h2 className="text-xl font-semibold mb-4 border-b pb-2">Your Habits</h2>
           {habits.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">No habits found. Start by creating one!</p>
+            <div data-testid="empty-state" className="text-gray-500 text-center py-12">
+              <p className="text-lg">No habits yet. Create your first one!</p>
+            </div>
           ) : (
-            <ul className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-2">
               {habits.map((habit) => (
-                <li key={habit.id} className="flex justify-between items-center p-4 border rounded hover:bg-gray-50">
-                  <div>
-                    <h3 className="font-medium text-lg">{habit.name}</h3>
-                    <p className="text-sm text-gray-500">{habit.description}</p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-sm font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">
-                      {habit.frequency}
-                    </span>
-                  </div>
-                </li>
+                <HabitCard
+                  key={habit.id}
+                  habit={habit}
+                  onUpdate={() => session && loadHabits(session.userId)}
+                  onEdit={() => setEditingHabit(habit)}
+                />
               ))}
-            </ul>
+            </div>
           )}
         </section>
       </main>

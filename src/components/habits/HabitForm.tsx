@@ -1,34 +1,45 @@
 'use client';
 
 import { useState } from 'react';
-import { saveHabit } from '@/lib/habits';
+import { saveHabit, updateHabit } from '@/lib/habits';
 import type { Habit } from '@/types/habit';
 
 interface HabitFormProps {
   userId: string;
   onSuccess: () => void;
   onCancel: () => void;
+  habitToEdit?: Habit;
 }
 
-export default function HabitForm({ userId, onSuccess, onCancel }: HabitFormProps) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [frequency, setFrequency] = useState<'daily'>('daily');
+export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: HabitFormProps) {
+  const [name, setName] = useState(habitToEdit?.name || '');
+  const [description, setDescription] = useState(habitToEdit?.description || '');
+  const [frequency, setFrequency] = useState<'daily'>(habitToEdit?.frequency || 'daily');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newHabit: Habit = {
-      id: crypto.randomUUID(),
-      userId,
-      name,
-      description,
-      frequency,
-      createdAt: new Date().toISOString(),
-      completions: [],
-    };
-
-    saveHabit(newHabit);
+    if (habitToEdit) {
+      const updatedHabit: Habit = {
+        ...habitToEdit,
+        name,
+        description,
+        frequency,
+      };
+      updateHabit(updatedHabit);
+    } else {
+      const newHabit: Habit = {
+        id: crypto.randomUUID(),
+        userId,
+        name,
+        description,
+        frequency,
+        createdAt: new Date().toISOString(),
+        completions: [],
+      };
+      saveHabit(newHabit);
+    }
+    
     onSuccess();
   };
 
@@ -39,7 +50,7 @@ export default function HabitForm({ userId, onSuccess, onCancel }: HabitFormProp
         data-testid="habit-form"
         className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md flex flex-col gap-4"
       >
-        <h2 className="text-xl font-bold">Create New Habit</h2>
+        <h2 className="text-xl font-bold">{habitToEdit ? 'Edit Habit' : 'Create New Habit'}</h2>
         
         <div className="flex flex-col gap-1">
           <label htmlFor="habit-name" className="text-sm font-medium">Name</label>
