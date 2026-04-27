@@ -44,7 +44,7 @@ export default function SignupForm() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="password" name="password" className="text-sm font-medium text-foreground">Password</label>
+        <label htmlFor="password" className="text-sm font-medium text-foreground">Password</label>
         <input
           id="password"
           type="password"
