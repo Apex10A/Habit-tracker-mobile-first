@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { signup } from '@/lib/auth';
 
 export default function SignupForm() {
@@ -27,44 +28,67 @@ export default function SignupForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-sm mx-auto p-6 border border-border-base rounded-lg shadow-sm bg-surface">
-      <h2 className="text-2xl font-bold text-center text-foreground">Sign Up</h2>
-      
-      <div className="flex flex-col gap-1">
-        <label htmlFor="email" className="text-sm font-medium text-foreground">Email</label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          data-testid="auth-signup-email"
-          required
-          className="border border-border-base p-2 rounded focus:ring-2 focus:ring-accent outline-none bg-surface text-foreground"
-        />
+    <div className="w-full max-w-md space-y-8 p-8 bg-surface rounded-2xl shadow-xl border border-border-base">
+      <div className="text-center">
+        <h2 className="text-3xl font-extrabold text-foreground">Create Account</h2>
+        <p className="mt-2 text-sm text-secondary-text">Start your habit tracking journey today</p>
       </div>
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="password" className="text-sm font-medium text-foreground">Password</label>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          data-testid="auth-signup-password"
-          required
-          className="border border-border-base p-2 rounded focus:ring-2 focus:ring-accent outline-none bg-surface text-foreground"
-        />
-      </div>
+      <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+        <div className="space-y-4">
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="email" className="text-sm font-semibold text-foreground ml-1">Email Address</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="name@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              data-testid="auth-signup-email"
+              required
+              className="w-full px-4 py-3 rounded-xl border border-border-base focus:ring-2 focus:ring-accent focus:border-transparent outline-none bg-background text-foreground transition-all placeholder:text-secondary-text/50"
+            />
+          </div>
 
-      {error && <p className="text-danger text-sm">{error}</p>}
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="password" title="password" className="text-sm font-semibold text-foreground ml-1">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              data-testid="auth-signup-password"
+              required
+              className="w-full px-4 py-3 rounded-xl border border-border-base focus:ring-2 focus:ring-accent focus:border-transparent outline-none bg-background text-foreground transition-all placeholder:text-secondary-text/50"
+            />
+            {/* <p className="text-[10px] text-secondary-text ml-1">Must be at least 8 characters long</p> */}
+          </div>
+        </div>
 
-      <button
-        type="submit"
-        data-testid="auth-signup-submit"
-        className="bg-accent text-white p-2 rounded hover:opacity-90 transition-colors font-medium"
-      >
-        Sign Up
-      </button>
-    </form>
+        {error && (
+          <div className="p-3 rounded-lg bg-danger/10 border border-danger/20">
+            <p className="text-danger text-xs font-medium text-center">{error}</p>
+          </div>
+        )}
+
+        <button
+          type="submit"
+          data-testid="auth-signup-submit"
+          className="w-full bg-accent text-white py-3.5 rounded-xl hover:bg-accent/90 active:scale-[0.98] transition-all font-bold shadow-lg shadow-accent/20"
+        >
+          Create Account
+        </button>
+
+        <div className="text-center mt-6">
+          <p className="text-sm text-secondary-text">
+            Already have an account?{' '}
+            <Link href="/login" className="font-bold text-accent hover:underline">
+              Sign In
+            </Link>
+          </p>
+        </div>
+      </form>
+    </div>
   );
 }
