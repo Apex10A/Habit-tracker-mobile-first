@@ -10,7 +10,7 @@ export const calculateCurrentStreak = (
   }
 
   let streak = 0;
-  let currentDate = new Date(today);
+  const currentDate = new Date(today);
 
   while (completionSet.has(currentDate.toISOString().split('T')[0])) {
     streak++;
