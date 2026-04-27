@@ -1,5 +1,18 @@
 import type { Habit } from '../types/habit';
 
+const HABITS_KEY = 'habit-tracker-habits';
+
+export function getHabits(): Habit[] {
+  if (typeof window === 'undefined') return [];
+  const habits = localStorage.getItem(HABITS_KEY);
+  return habits ? JSON.parse(habits) : [];
+}
+
+export function saveHabit(habit: Habit): void {
+  const habits = getHabits();
+  localStorage.setItem(HABITS_KEY, JSON.stringify([...habits, habit]));
+}
+
 export function toggleHabitCompletion(habit: Habit, date: string): Habit {
   const isCompleted = habit.completions.includes(date);
   const nextCompletions = isCompleted
