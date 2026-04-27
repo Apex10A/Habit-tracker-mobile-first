@@ -27,11 +27,11 @@ export default function SignupForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-sm mx-auto p-4 border rounded shadow">
-      <h2 className="text-2xl font-bold text-center">Sign Up</h2>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-sm mx-auto p-6 border border-border-base rounded-lg shadow-sm bg-surface">
+      <h2 className="text-2xl font-bold text-center text-foreground">Sign Up</h2>
       
       <div className="flex flex-col gap-1">
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email" className="text-sm font-medium text-foreground">Email</label>
         <input
           id="email"
           type="email"
@@ -39,12 +39,12 @@ export default function SignupForm() {
           onChange={(e) => setEmail(e.target.value)}
           data-testid="auth-signup-email"
           required
-          className="border p-2 rounded"
+          className="border border-border-base p-2 rounded focus:ring-2 focus:ring-accent outline-none bg-surface text-foreground"
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password" name="password" className="text-sm font-medium text-foreground">Password</label>
         <input
           id="password"
           type="password"
@@ -52,16 +52,16 @@ export default function SignupForm() {
           onChange={(e) => setPassword(e.target.value)}
           data-testid="auth-signup-password"
           required
-          className="border p-2 rounded"
+          className="border border-border-base p-2 rounded focus:ring-2 focus:ring-accent outline-none bg-surface text-foreground"
         />
       </div>
 
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {error && <p className="text-danger text-sm">{error}</p>}
 
       <button
         type="submit"
         data-testid="auth-signup-submit"
-        className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+        className="bg-accent text-white p-2 rounded hover:opacity-90 transition-colors font-medium"
       >
         Sign Up
       </button>
