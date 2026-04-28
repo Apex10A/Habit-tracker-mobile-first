@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { vi, expect, beforeEach, describe, it } from 'vitest';
+import { vi, expect, beforeEach } from 'vitest';
 import SignupForm from '@/components/auth/SignupForm';
 import LoginForm from '@/components/auth/LoginForm';
 

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { saveHabit, updateHabit } from '@/lib/habits';
+import { validateHabitName } from '@/lib/validators';
 import type { Habit } from '@/types/habit';
 
 interface HabitFormProps {
@@ -15,14 +16,22 @@ export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: 
   const [name, setName] = useState(habitToEdit?.name || '');
   const [description, setDescription] = useState(habitToEdit?.description || '');
   const [frequency, setFrequency] = useState<'daily'>(habitToEdit?.frequency || 'daily');
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+
+    const validation = validateHabitName(name);
+    if (!validation.valid) {
+      setError(validation.error);
+      return;
+    }
 
     if (habitToEdit) {
       const updatedHabit: Habit = {
         ...habitToEdit,
-        name,
+        name: validation.value,
         description,
         frequency,
       };
@@ -31,7 +40,7 @@ export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: 
       const newHabit: Habit = {
         id: crypto.randomUUID(),
         userId,
-        name,
+        name: validation.value,
         description,
         frequency,
         createdAt: new Date().toISOString(),
@@ -60,10 +69,10 @@ export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: 
             value={name}
             onChange={(e) => setName(e.target.value)}
             data-testid="habit-name-input"
-            required
             placeholder="E.g., Morning Run"
             className="border border-border-base p-2 rounded focus:ring-2 focus:ring-accent outline-none bg-surface text-foreground"
           />
+          {error && <p className="text-danger text-xs mt-1">{error}</p>}
         </div>
 
         <div className="flex flex-col gap-1">

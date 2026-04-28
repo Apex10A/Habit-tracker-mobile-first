@@ -1,6 +1,14 @@
 import '@testing-library/jest-dom';
 import { vi } from 'vitest';
 
+// Mock next/font/google
+vi.mock('next/font/google', () => ({
+  Gabarito: () => ({
+    variable: '--font-gabarito',
+    className: 'mock-gabarito',
+  }),
+}));
+
 // Mock next/navigation
 vi.mock('next/navigation', () => ({
   useRouter: () => ({

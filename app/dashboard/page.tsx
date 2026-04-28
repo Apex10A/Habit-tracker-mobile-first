@@ -71,14 +71,14 @@ export default function DashboardPage() {
           <button
             onClick={() => setShowForm(true)}
             data-testid="create-habit-button"
-            className="flex-1 md:flex-none bg-accent text-white px-4 py-2 rounded-lg hover:opacity-90 transition-colors font-medium text-sm md:text-base"
+            className="flex-1 md:flex-none bg-accent text-white px-4 py-2 rounded-lg hover:opacity-90 transition-colors font-medium text-sm md:text-base focus:ring-2 focus:ring-accent focus:ring-offset-2 outline-none"
           >
             Create Habit
           </button>
           <button
             onClick={handleLogout}
             data-testid="auth-logout-button"
-            className="bg-danger/10 text-danger px-4 py-2 rounded-lg hover:bg-danger/20 transition-colors text-sm md:text-base font-medium"
+            className="bg-danger/10 text-danger px-4 py-2 rounded-lg hover:bg-danger/20 transition-colors text-sm md:text-base font-medium focus:ring-2 focus:ring-danger focus:ring-offset-2 outline-none"
           >
             Logout
           </button>
