@@ -16,7 +16,9 @@ export function signup(email: string, password: string): void {
   }
 
   const newUser: User = {
-    id: crypto.randomUUID(),
+    id: typeof crypto.randomUUID === 'function' 
+      ? crypto.randomUUID() 
+      : Math.random().toString(36).substring(2) + Date.now().toString(36),
     email,
     password,
     createdAt: new Date().toISOString(),
