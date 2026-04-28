@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Habit Tracker PWA
 
-## Getting Started
+A lightweight, offline-first Progressive Web App (PWA) built with Next.js to help you track daily habits and build streaks.
 
-First, run the development server:
+## Project Overview
+This application allows users to create, manage, and track daily habits. It features a dashboard with streak visualization, habit completion toggling, and full offline support via a Service Worker.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Setup Instructions
+1. Navigate to the `habit` directory: `cd habit`
+2. Install dependencies: `npm install`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run Instructions
+- Development: `npm run dev`
+- Production Build: `npm run build`
+- Production Start: `npm run start`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Test Instructions
+- Unit Tests: `npm run test:unit`
+- Integration Tests: `npm run test:integration`
+- E2E Tests: `npm run test:e2e`
+- All Tests: `npm run test`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## LocalStorage Structure
+The app persists data entirely in the browser's localStorage using three keys:
+- `habit-tracker-users`: Stores user credentials and profile information.
+- `habit-tracker-session`: Manages the currently active user session.
+- `habit-tracker-habits`: Stores all habit definitions and completion logs.
 
-## Learn More
+## PWA Support
+- **Service Worker**: Caches the app shell and core assets for offline access.
+- **Manifest**: Provides app metadata for installation on mobile and desktop.
+- **Offline Mode**: The app loads from cache when no network connection is available.
 
-To learn more about Next.js, take a look at the following resources:
+## Trade-offs and Limitations
+- **LocalStorage Storage**: Data is limited to the current browser/device and can be cleared by the user.
+- **Daily Frequency**: Currently only supports daily habit tracking.
+- **Client-Side Auth**: Simple localStorage-based authentication for demo purposes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Test Mapping
+| Test File | Behavior Verified |
+|-----------|-------------------|
+| `tests/unit/slug.test.ts` | Slug generation logic and edge cases |
+| `tests/unit/validators.test.ts` | Habit name validation rules |
+| `tests/unit/streaks.test.ts` | Current streak calculation logic |
+| `tests/unit/habits.test.ts` | Habit completion toggling and immutability |
+| `tests/integration/auth-flow.test.tsx` | Signup/Login UI and session management |
+| `tests/integration/habit-form.test.tsx` | Habit CRUD operations and UI updates |
+| `tests/e2e/app.spec.ts` | Full user journeys, redirects, and offline support |

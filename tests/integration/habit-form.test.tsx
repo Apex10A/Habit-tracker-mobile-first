@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, within } from '@testing-library/react';
-import { vi, expect, beforeEach, describe, it } from 'vitest';
+import { vi, expect, beforeEach } from 'vitest';
 import DashboardPage from '@/app/dashboard/page';
 
 describe('habit form', () => {
