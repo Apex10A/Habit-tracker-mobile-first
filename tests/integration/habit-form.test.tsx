@@ -1,5 +1,4 @@
 import { render, screen, fireEvent, within } from '@testing-library/react';
-import { vi, expect, beforeEach } from 'vitest';
 import DashboardPage from '@/app/dashboard/page';
 
 describe('habit form', () => {
@@ -17,10 +16,10 @@ describe('habit form', () => {
   it('shows a validation error when habit name is empty', async () => {
     render(<DashboardPage />);
     
-    // Open form
-    fireEvent.click(screen.getByTestId('create-habit-button'));
+    // Wait for dashboard to load
+    const createButton = await screen.findByTestId('create-habit-button');
+    fireEvent.click(createButton);
     
-    const saveButton = screen.getByTestId('habit-save-button');
     const nameInput = screen.getByTestId('habit-name-input');
     
     // Clear name if any
@@ -34,7 +33,8 @@ describe('habit form', () => {
   it('creates a new habit and renders it in the list', async () => {
     render(<DashboardPage />);
     
-    fireEvent.click(screen.getByTestId('create-habit-button'));
+    const createButton = await screen.findByTestId('create-habit-button');
+    fireEvent.click(createButton);
     
     fireEvent.change(screen.getByTestId('habit-name-input'), { target: { value: 'New Habit' } });
     fireEvent.change(screen.getByTestId('habit-description-input'), { target: { value: 'Description' } });
@@ -58,7 +58,8 @@ describe('habit form', () => {
 
     render(<DashboardPage />);
     
-    fireEvent.click(screen.getByTestId('habit-edit-old-name'));
+    const editButton = await screen.findByTestId('habit-edit-old-name');
+    fireEvent.click(editButton);
     
     const nameInput = screen.getByTestId('habit-name-input');
     fireEvent.change(nameInput, { target: { value: 'Updated Name' } });
@@ -88,7 +89,8 @@ describe('habit form', () => {
 
     render(<DashboardPage />);
     
-    fireEvent.click(screen.getByTestId('habit-delete-delete-me'));
+    const deleteButton = await screen.findByTestId('habit-delete-delete-me');
+    fireEvent.click(deleteButton);
     
     // Check if confirmation is shown (HabitCard enters isDeleting state)
     expect(screen.getByText('Delete this habit?')).toBeInTheDocument();
@@ -116,7 +118,7 @@ describe('habit form', () => {
 
     render(<DashboardPage />);
     
-    const streakElement = screen.getByTestId('habit-streak-streak-habit');
+    const streakElement = await screen.findByTestId('habit-streak-streak-habit');
     expect(streakElement).toHaveTextContent('0🔥');
     
     const completeButton = screen.getByTestId('habit-complete-streak-habit');
