@@ -1,13 +1,14 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Habit Tracker app', () => {
-  test('shows the splash screen and redirects unauthenticated users to /login', async ({ page }) => {
+  test('shows the landing page for unauthenticated users', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('[data-testid="splash-screen"]')).toBeVisible({ timeout: 5000 });
-    await expect(page).toHaveURL(/\/login/, { timeout: 8000 });
+    await expect(page.locator('[data-testid="landing-page"]')).toBeVisible({ timeout: 5000 });
+    await expect(page).toHaveURL('/');
+    await expect(page.getByTestId('landing-signup-link')).toBeVisible();
   });
 
-  test('redirects authenticated users from / to /dashboard', async ({ page }) => {
+  test('shows dashboard link on landing page for authenticated users', async ({ page }) => {
     await page.goto('/login');
     await page.evaluate(() => {
       localStorage.setItem('habit-tracker-session', JSON.stringify({
@@ -16,6 +17,9 @@ test.describe('Habit Tracker app', () => {
       }));
     });
     await page.goto('/');
+    await expect(page.locator('[data-testid="landing-page"]')).toBeVisible({ timeout: 5000 });
+    await expect(page.getByTestId('landing-dashboard-link')).toBeVisible();
+    await page.getByTestId('landing-dashboard-link').click();
     await expect(page).toHaveURL(/\/dashboard/, { timeout: 8000 });
   });
 
