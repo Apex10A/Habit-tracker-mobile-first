@@ -28,6 +28,12 @@ export default function DashboardSkeleton() {
           </div>
         </section>
 
+        <section className="bg-surface rounded-2xl shadow-md p-6 mb-6">
+          <Skeleton className="h-6 w-24 mb-3" />
+          <Skeleton className="h-4 w-56 mb-4" />
+          <Skeleton className="h-2 w-full rounded-full" />
+        </section>
+
         <section>
           <Skeleton className="h-6 w-28 mb-3" />
           <div className="grid gap-4 md:grid-cols-2">

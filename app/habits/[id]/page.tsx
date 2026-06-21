@@ -6,9 +6,10 @@ import { useParams, useRouter } from 'next/navigation';
 import { getSession } from '@/lib/auth';
 import { getHabitById, toggleHabitCompletion, updateHabit } from '@/lib/habits';
 import { getHabitColorOption } from '@/lib/habitAppearance';
-import { calculateCurrentStreak } from '@/lib/streaks';
+import { calculateBestStreak, calculateCurrentStreak } from '@/lib/streaks';
 import { getLocalDateString } from '@/lib/today';
 import { HEATMAP_WEEKS, buildHeatmap, getHeatmapCompletionRate } from '@/lib/heatmap';
+import { getHabitWeeklyStats } from '@/lib/stats';
 import type { Habit } from '@/types/habit';
 import CompletionHeatmap from '@/components/habits/CompletionHeatmap';
 import ThemeToggle from '@/components/shared/ThemeToggle';
@@ -51,11 +52,14 @@ export default function HabitDetailPage() {
 
     const grid = buildHeatmap(habit.completions, habit.createdAt);
     const isCompletedToday = habit.completions.includes(today);
+    const weeklyStats = getHabitWeeklyStats(habit, today);
 
     return {
       currentStreak: calculateCurrentStreak(habit.completions, today),
+      bestStreak: calculateBestStreak(habit.completions),
       totalCompletions: habit.completions.length,
       recentCompletionRate: getHeatmapCompletionRate(grid),
+      weeklyCompletionRate: weeklyStats.percentage,
       isCompletedToday,
     };
   }, [habit, today]);
@@ -160,7 +164,7 @@ export default function HabitDetailPage() {
             </Button>
           </div>
 
-          <div className="mt-6 grid grid-cols-3 gap-3">
+          <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-3">
             <div className="rounded-2xl bg-background border border-border-base p-4 text-center">
               <p className="text-2xl font-bold text-streak" data-testid="habit-detail-current-streak">
                 {stats.currentStreak}🔥
@@ -168,12 +172,24 @@ export default function HabitDetailPage() {
               <p className="text-xs uppercase tracking-wide text-secondary-text mt-1">Current streak</p>
             </div>
             <div className="rounded-2xl bg-background border border-border-base p-4 text-center">
+              <p className="text-2xl font-bold text-streak" data-testid="habit-detail-best-streak">
+                {stats.bestStreak}🔥
+              </p>
+              <p className="text-xs uppercase tracking-wide text-secondary-text mt-1">Best streak</p>
+            </div>
+            <div className="rounded-2xl bg-background border border-border-base p-4 text-center">
+              <p className="text-2xl font-bold text-accent" data-testid="habit-detail-weekly-rate">
+                {stats.weeklyCompletionRate}%
+              </p>
+              <p className="text-xs uppercase tracking-wide text-secondary-text mt-1">This week</p>
+            </div>
+            <div className="rounded-2xl bg-background border border-border-base p-4 text-center">
               <p className="text-2xl font-bold text-foreground" data-testid="habit-detail-total-completions">
                 {stats.totalCompletions}
               </p>
               <p className="text-xs uppercase tracking-wide text-secondary-text mt-1">Total check-ins</p>
             </div>
-            <div className="rounded-2xl bg-background border border-border-base p-4 text-center">
+            <div className="rounded-2xl bg-background border border-border-base p-4 text-center md:col-span-2">
               <p className="text-2xl font-bold text-accent" data-testid="habit-detail-recent-rate">
                 {stats.recentCompletionRate}%
               </p>
