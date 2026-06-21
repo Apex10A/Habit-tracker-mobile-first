@@ -4,6 +4,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { login } from '@/lib/auth';
+import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
+import Input from '@/components/ui/Input';
+import Label from '@/components/ui/Label';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
@@ -28,7 +32,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md space-y-8 p-8 bg-surface rounded-2xl shadow-xl border border-border-base">
+    <Card padding="lg" className="w-full max-w-md space-y-8 shadow-xl">
       <div className="text-center">
         <h2 className="font-display text-3xl font-bold text-foreground">Welcome Back</h2>
         <p className="mt-2 text-sm text-secondary-text">Please enter your details to sign in</p>
@@ -37,8 +41,8 @@ export default function LoginForm() {
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
         <div className="space-y-4">
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="email" className="text-sm font-semibold text-foreground ml-1">Email Address</label>
-            <input
+            <Label htmlFor="email">Email Address</Label>
+            <Input
               id="email"
               type="email"
               placeholder="name@example.com"
@@ -46,13 +50,14 @@ export default function LoginForm() {
               onChange={(e) => setEmail(e.target.value)}
               data-testid="auth-login-email"
               required
-              className="w-full px-4 py-3 rounded-xl border border-border-base focus:ring-2 focus:ring-accent focus:border-transparent outline-none bg-background text-foreground transition-all placeholder:text-secondary-text/50"
             />
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="password" title="password" className="text-sm font-semibold text-foreground ml-1">Password</label>
-            <input
+            <Label htmlFor="password" title="password">
+              Password
+            </Label>
+            <Input
               id="password"
               type="password"
               placeholder="••••••••"
@@ -60,7 +65,6 @@ export default function LoginForm() {
               onChange={(e) => setPassword(e.target.value)}
               data-testid="auth-login-password"
               required
-              className="w-full px-4 py-3 rounded-xl border border-border-base focus:ring-2 focus:ring-accent focus:border-transparent outline-none bg-background text-foreground transition-all placeholder:text-secondary-text/50"
             />
           </div>
         </div>
@@ -71,23 +75,19 @@ export default function LoginForm() {
           </div>
         )}
 
-        <button
-          type="submit"
-          data-testid="auth-login-submit"
-          className="w-full bg-pink text-foreground py-3.5 rounded-xl hover:bg-pink-hover active:scale-[0.98] transition-all font-bold shadow-pink"
-        >
+        <Button type="submit" size="lg" fullWidth data-testid="auth-login-submit">
           Sign In
-        </button>
+        </Button>
 
         <div className="text-center mt-6">
           <p className="text-sm text-secondary-text">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/signup" className="font-bold text-accent hover:underline">
               Create an account
             </Link>
           </p>
         </div>
       </form>
-    </div>
+    </Card>
   );
 }

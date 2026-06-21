@@ -16,7 +16,9 @@ export function getPreferredTheme(): Theme {
 }
 
 export function applyTheme(theme: Theme) {
-  document.documentElement.classList.toggle('dark', theme === 'dark');
+  const root = document.documentElement;
+  root.classList.remove('light', 'dark');
+  root.classList.add(theme);
   localStorage.setItem(THEME_STORAGE_KEY, theme);
 }
 

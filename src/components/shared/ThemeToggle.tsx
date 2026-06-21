@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { applyTheme, getPreferredTheme, type Theme } from '@/lib/theme';
+import { applyTheme, type Theme } from '@/lib/theme';
 
 function IconSun({ className }: { className?: string }) {
   return (

@@ -1,3 +1,5 @@
+import Button from '@/components/ui/Button';
+
 type EmptyStateProps = {
   onCreateHabit: () => void;
 };
@@ -14,21 +16,15 @@ export default function EmptyState({ onCreateHabit }: EmptyStateProps) {
         <span className="font-display text-2xl font-bold text-accent">+</span>
       </div>
 
-      <h3 className="font-display text-xl font-bold text-foreground">
-        Start with one habit
-      </h3>
+      <h3 className="font-display text-xl font-bold text-foreground">Start with one habit</h3>
       <p className="mt-2 text-secondary-text max-w-sm leading-relaxed">
-        Small daily actions build momentum. Create your first habit and check in each day
-        to grow your streak.
+        Small daily actions build momentum. Create your first habit and check in each day to grow
+        your streak.
       </p>
 
-      <button
-        type="button"
-        onClick={onCreateHabit}
-        className="mt-8 px-6 py-3 rounded-xl bg-pink text-foreground font-medium shadow-pink hover:bg-pink-hover transition-colors"
-      >
+      <Button onClick={onCreateHabit} className="mt-8">
         Create your first habit
-      </button>
+      </Button>
 
       <div className="mt-10 w-full max-w-md">
         <p className="text-xs font-medium text-secondary-text uppercase tracking-wide mb-3">
@@ -38,7 +34,7 @@ export default function EmptyState({ onCreateHabit }: EmptyStateProps) {
           {suggestions.map((suggestion) => (
             <li
               key={suggestion}
-              className="px-3 py-1.5 rounded-full bg-surface border border-border-base text-sm text-secondary-text"
+              className="px-3 py-1.5 rounded-full bg-background border border-border-base text-sm text-secondary-text"
             >
               {suggestion}
             </li>

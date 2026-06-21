@@ -11,6 +11,8 @@ import HabitCard from '@/components/habits/HabitCard';
 import DashboardSkeleton from '@/components/dashboard/DashboardSkeleton';
 import EmptyState from '@/components/dashboard/EmptyState';
 import ThemeToggle from '@/components/shared/ThemeToggle';
+import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
 
 export default function DashboardPage() {
   const [session, setSession] = useState<Session | null>(null);
@@ -72,20 +74,21 @@ export default function DashboardPage() {
         </div>
         <div className="flex gap-2 md:gap-4 items-center">
           <ThemeToggle />
-          <button
+          <Button
             onClick={() => setShowForm(true)}
             data-testid="create-habit-button"
-            className="flex-1 md:flex-none bg-pink text-foreground px-4 py-2.5 rounded-xl hover:bg-pink-hover transition-colors font-medium text-sm md:text-base shadow-pink focus:ring-2 focus:ring-pink focus:ring-offset-2 outline-none"
+            className="flex-1 md:flex-none"
           >
             Create Habit
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={handleLogout}
             data-testid="auth-logout-button"
-            className="bg-danger-muted text-danger px-4 py-2.5 rounded-xl hover:bg-danger/20 transition-colors text-sm md:text-base font-medium focus:ring-2 focus:ring-danger focus:ring-offset-2 outline-none"
+            variant="ghost"
+            className="bg-danger-muted text-danger hover:bg-danger/20 focus:ring-danger"
           >
             Logout
-          </button>
+          </Button>
         </div>
       </header>
 
@@ -99,8 +102,10 @@ export default function DashboardPage() {
       )}
 
       <main className="max-w-4xl mx-auto">
-        <section className="bg-surface rounded-2xl shadow-md p-6">
-          <h2 className="font-display text-xl font-medium mb-4 border-b border-border-base pb-2">Your Habits</h2>
+        <Card padding="md">
+          <h2 className="font-display text-xl font-medium mb-4 border-b border-border-base pb-2">
+            Your Habits
+          </h2>
           {habits.length === 0 ? (
             <EmptyState onCreateHabit={() => setShowForm(true)} />
           ) : (
@@ -115,7 +120,7 @@ export default function DashboardPage() {
               ))}
             </div>
           )}
-        </section>
+        </Card>
       </main>
     </div>
   );
