@@ -12,6 +12,15 @@ export function getHabits(): Habit[] {
   return parsed.map((habit) => normalizeHabit(habit));
 }
 
+export function getUserHabits(userId: string): Habit[] {
+  return getHabits().filter((habit) => habit.userId === userId);
+}
+
+export function replaceUserHabits(userId: string, habits: Habit[]): void {
+  const otherHabits = getHabits().filter((habit) => habit.userId !== userId);
+  localStorage.setItem(HABITS_KEY, JSON.stringify([...otherHabits, ...habits]));
+}
+
 export function saveHabit(habit: Habit): void {
   const habits = getHabits();
   localStorage.setItem(HABITS_KEY, JSON.stringify([...habits, habit]));
