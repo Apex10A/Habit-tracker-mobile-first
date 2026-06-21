@@ -29,6 +29,11 @@ export function deleteHabit(id: string): void {
   localStorage.setItem(HABITS_KEY, JSON.stringify(nextHabits));
 }
 
+export function getHabitById(id: string, userId: string): Habit | null {
+  const habit = getHabits().find((entry) => entry.id === id && entry.userId === userId);
+  return habit ?? null;
+}
+
 export function toggleHabitCompletion(habit: Habit, date: string): Habit {
   const isCompleted = habit.completions.includes(date);
   const nextCompletions = isCompleted

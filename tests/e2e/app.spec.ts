@@ -111,6 +111,42 @@ test.describe('Habit Tracker app', () => {
     await expect(page.getByText('Read Books')).toBeVisible({ timeout: 5000 });
   });
 
+  test('opens habit detail page with completion heatmap', async ({ page }) => {
+    await page.goto('/login');
+    const userId = 'detail-user';
+    const habitId = 'detail-habit-1';
+    const today = new Date().toISOString().split('T')[0];
+
+    await page.evaluate(({ userId, habitId, today }) => {
+      localStorage.setItem('habit-tracker-session', JSON.stringify({ userId, email: 'detail@test.com' }));
+      localStorage.setItem('habit-tracker-habits', JSON.stringify([
+        {
+          id: habitId,
+          userId,
+          name: 'Read Books',
+          description: '10 min daily',
+          frequency: 'daily',
+          color: 'blue',
+          emoji: '📚',
+          createdAt: '2026-01-01T00:00:00.000Z',
+          completions: [today],
+        },
+      ]));
+    }, { userId, habitId, today });
+
+    await page.goto('/dashboard');
+    await page.getByTestId('habit-detail-read-books').click();
+    await expect(page).toHaveURL(/\/habits\/detail-habit-1/, { timeout: 8000 });
+    await expect(page.getByTestId('habit-detail-page')).toBeVisible();
+    await expect(page.getByTestId('completion-heatmap')).toBeVisible();
+    await expect(page.getByTestId('habit-detail-total-completions')).toHaveText('1');
+  });
+
+  test('prevents unauthenticated access to habit detail pages', async ({ page }) => {
+    await page.goto('/habits/some-habit-id');
+    await expect(page).toHaveURL(/\/login/, { timeout: 8000 });
+  });
+
   test('logs out and redirects to /login', async ({ page }) => {
     await page.goto('/login');
     await page.evaluate(() => {
