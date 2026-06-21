@@ -7,6 +7,8 @@ const mockHabit: Habit = {
   name: 'Drink Water',
   description: 'Drink 8 glasses of water',
   frequency: 'daily',
+  color: 'blue',
+  emoji: '💧',
   createdAt: '2026-01-01',
   completions: ['2026-04-26'],
 };
@@ -25,6 +27,28 @@ describe('habits utility', () => {
     it('returns stored habits', () => {
       localStorage.setItem('habit-tracker-habits', JSON.stringify([mockHabit]));
       expect(getHabits()).toEqual([mockHabit]);
+    });
+
+    it('normalizes legacy habits without color or emoji', () => {
+      localStorage.setItem(
+        'habit-tracker-habits',
+        JSON.stringify([
+          {
+            id: 'legacy-1',
+            userId: 'user-1',
+            name: 'Legacy Habit',
+            description: '',
+            frequency: 'daily',
+            createdAt: '2026-01-01',
+            completions: [],
+          },
+        ])
+      );
+
+      expect(getHabits()[0]).toMatchObject({
+        color: 'accent',
+        emoji: '',
+      });
     });
   });
 

@@ -2,8 +2,11 @@
 
 import { useState } from 'react';
 import { saveHabit, updateHabit } from '@/lib/habits';
+import { getDefaultHabitFields } from '@/lib/habitAppearance';
 import { validateHabitName } from '@/lib/validators';
-import type { Habit } from '@/types/habit';
+import type { Habit, HabitColor } from '@/types/habit';
+import HabitColorPicker from '@/components/habits/HabitColorPicker';
+import HabitEmojiPicker from '@/components/habits/HabitEmojiPicker';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import Input from '@/components/ui/Input';
@@ -20,9 +23,12 @@ interface HabitFormProps {
 }
 
 export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: HabitFormProps) {
+  const defaults = getDefaultHabitFields();
   const [name, setName] = useState(habitToEdit?.name || '');
   const [description, setDescription] = useState(habitToEdit?.description || '');
   const [frequency, setFrequency] = useState<'daily'>(habitToEdit?.frequency || 'daily');
+  const [color, setColor] = useState<HabitColor>(habitToEdit?.color || defaults.color);
+  const [emoji, setEmoji] = useState(habitToEdit?.emoji || defaults.emoji);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -41,6 +47,8 @@ export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: 
         name: validation.value,
         description,
         frequency,
+        color,
+        emoji,
       };
       updateHabit(updatedHabit);
     } else {
@@ -50,6 +58,8 @@ export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: 
         name: validation.value,
         description,
         frequency,
+        color,
+        emoji,
         createdAt: new Date().toISOString(),
         completions: [],
       };
@@ -91,6 +101,13 @@ export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: 
               className="h-24"
             />
           </div>
+
+          <div className="flex flex-col gap-2">
+            <Label>Color</Label>
+            <HabitColorPicker value={color} onChange={setColor} />
+          </div>
+
+          <HabitEmojiPicker value={emoji} onChange={setEmoji} />
 
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="habit-frequency">Frequency</Label>

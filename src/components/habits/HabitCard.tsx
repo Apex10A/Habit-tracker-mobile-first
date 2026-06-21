@@ -5,6 +5,7 @@ import { Habit } from '@/types/habit';
 import { getHabitSlug } from '@/lib/slug';
 import { calculateCurrentStreak } from '@/lib/streaks';
 import { getLocalDateString } from '@/lib/today';
+import { getHabitColorOption } from '@/lib/habitAppearance';
 import { toggleHabitCompletion, updateHabit, deleteHabit } from '@/lib/habits';
 import { IconEdit, IconTrash } from '@/components/ui/Icon';
 import Button from '@/components/ui/Button';
@@ -22,6 +23,7 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
   const today = getLocalDateString();
   const isCompletedToday = habit.completions.includes(today);
   const streak = calculateCurrentStreak(habit.completions, today);
+  const colorOption = getHabitColorOption(habit.color);
 
   const handleToggle = () => {
     const updatedHabit = toggleHabitCompletion(habit, today);
@@ -74,11 +76,12 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
       aria-pressed={isCompletedToday}
       aria-label={`${habit.name}, ${isCompletedToday ? 'completed today' : 'not completed today'}. Tap to toggle.`}
       className={cn(
-        'p-4 border rounded-2xl shadow-sm transition-all cursor-pointer select-none',
+        'p-4 border border-border-base border-l-4 rounded-2xl shadow-sm transition-all cursor-pointer select-none',
+        colorOption.borderClass,
         'hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
         isCompletedToday
-          ? 'bg-success-muted/50 border-success/40'
-          : 'bg-background border-border-base hover:border-accent/40'
+          ? 'bg-success-muted/50'
+          : 'bg-background hover:border-accent/40'
       )}
     >
       <div className="flex items-start gap-3">
@@ -108,14 +111,28 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
         <div className="min-w-0 flex-1">
           <div className="flex justify-between items-start gap-2">
             <div className="min-w-0">
-              <h3
-                className={cn(
-                  'font-display text-lg font-bold truncate',
-                  isCompletedToday ? 'text-success line-through' : 'text-foreground'
-                )}
-              >
-                {habit.name}
-              </h3>
+              <div className="flex items-center gap-2 min-w-0">
+                {habit.emoji ? (
+                  <span
+                    data-testid={`habit-emoji-display-${slug}`}
+                    className={cn(
+                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-lg',
+                      colorOption.tintClass
+                    )}
+                    aria-hidden="true"
+                  >
+                    {habit.emoji}
+                  </span>
+                ) : null}
+                <h3
+                  className={cn(
+                    'font-display text-lg font-bold truncate',
+                    isCompletedToday ? 'text-success line-through' : 'text-foreground'
+                  )}
+                >
+                  {habit.name}
+                </h3>
+              </div>
               {habit.description ? (
                 <p className="text-sm text-secondary-text line-clamp-2">{habit.description}</p>
               ) : null}
