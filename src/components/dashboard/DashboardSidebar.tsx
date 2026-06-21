@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import type { Session } from '@/types/auth';
-import { IconLayoutGrid, IconTrending, IconX } from '@/components/ui/Icon';
+import { IconLayoutGrid, IconSettings, IconTrending, IconX } from '@/components/ui/Icon';
 import Button from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
 
@@ -18,13 +19,19 @@ const navItems = [
     href: '/dashboard',
     label: 'Overview',
     icon: IconLayoutGrid,
-    active: true,
+    isActive: (pathname: string) => pathname === '/dashboard',
   },
   {
     href: '/dashboard#weekly-stats',
     label: 'Weekly stats',
     icon: IconTrending,
-    active: false,
+    isActive: () => false,
+  },
+  {
+    href: '/dashboard/settings',
+    label: 'Data & backup',
+    icon: IconSettings,
+    isActive: (pathname: string) => pathname.startsWith('/dashboard/settings'),
   },
 ];
 
@@ -38,6 +45,8 @@ export default function DashboardSidebar({
   onClose,
   onLogout,
 }: DashboardSidebarProps) {
+  const pathname = usePathname();
+
   const sidebarContent = (
     <>
       <div className="px-5 py-6 border-b border-border-base">
@@ -59,15 +68,17 @@ export default function DashboardSidebar({
       <nav className="flex-1 px-3 py-4 space-y-1" aria-label="Dashboard navigation">
         {navItems.map((item) => {
           const Icon = item.icon;
+          const active = item.isActive(pathname);
 
           return (
             <Link
               key={item.href}
               href={item.href}
               onClick={onClose}
+              data-testid={item.href === '/dashboard/settings' ? 'settings-nav-link' : undefined}
               className={cn(
                 'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors',
-                item.active
+                active
                   ? 'bg-accent-muted/70 text-foreground shadow-sm'
                   : 'text-secondary-text hover:bg-background hover:text-foreground'
               )}
