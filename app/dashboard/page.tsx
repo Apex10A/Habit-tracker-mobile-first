@@ -12,8 +12,8 @@ import EmptyState from '@/components/dashboard/EmptyState';
 import TodayProgress from '@/components/dashboard/TodayProgress';
 import TodayHabitsList from '@/components/dashboard/TodayHabitsList';
 import WeeklyStatsSummary from '@/components/dashboard/WeeklyStatsSummary';
-import ThemeToggle from '@/components/shared/ThemeToggle';
-import Button from '@/components/ui/Button';
+import DashboardShell from '@/components/dashboard/DashboardShell';
+import { formatTodayHeading } from '@/lib/today';
 import Card from '@/components/ui/Card';
 
 export default function DashboardPage() {
@@ -68,32 +68,12 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-4 md:p-8" data-testid="dashboard-page">
-      <header className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center mb-8 max-w-4xl mx-auto">
-        <div>
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">Dashboard</h1>
-          <p className="text-secondary-text text-sm md:text-base">Welcome back, {session?.email}</p>
-        </div>
-        <div className="flex gap-2 md:gap-4 items-center">
-          <ThemeToggle />
-          <Button
-            onClick={() => setShowForm(true)}
-            data-testid="create-habit-button"
-            className="flex-1 md:flex-none"
-          >
-            Create Habit
-          </Button>
-          <Button
-            onClick={handleLogout}
-            data-testid="auth-logout-button"
-            variant="ghost"
-            className="bg-danger-muted text-danger hover:bg-danger/20 focus:ring-danger"
-          >
-            Logout
-          </Button>
-        </div>
-      </header>
-
+    <DashboardShell
+      session={session!}
+      subtitle={`${formatTodayHeading()} · Welcome back, ${session?.email}`}
+      onLogout={handleLogout}
+      onCreateHabit={() => setShowForm(true)}
+    >
       {(showForm || editingHabit) && session && (
         <HabitForm
           userId={session.userId}
@@ -103,23 +83,23 @@ export default function DashboardPage() {
         />
       )}
 
-      <main className="max-w-4xl mx-auto">
-        {habits.length === 0 ? (
-          <Card padding="md">
-            <EmptyState onCreateHabit={() => setShowForm(true)} />
-          </Card>
-        ) : (
-          <>
-            <TodayProgress habits={habits} />
+      {habits.length === 0 ? (
+        <Card padding="md">
+          <EmptyState onCreateHabit={() => setShowForm(true)} />
+        </Card>
+      ) : (
+        <>
+          <TodayProgress habits={habits} />
+          <div id="weekly-stats">
             <WeeklyStatsSummary habits={habits} />
-            <TodayHabitsList
-              habits={habits}
-              onUpdate={() => session && loadHabits(session.userId)}
-              onEdit={setEditingHabit}
-            />
-          </>
-        )}
-      </main>
-    </div>
+          </div>
+          <TodayHabitsList
+            habits={habits}
+            onUpdate={() => session && loadHabits(session.userId)}
+            onEdit={setEditingHabit}
+          />
+        </>
+      )}
+    </DashboardShell>
   );
 }
