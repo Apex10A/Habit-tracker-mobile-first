@@ -50,3 +50,42 @@ export function IconCalendar({ size = 20, className, ...props }: IconProps) {
     </svg>
   );
 }
+
+export function IconLayoutGrid({ size = 20, className, ...props }: IconProps) {
+  return (
+    <svg {...defaults} width={size} height={size} className={className} {...props}>
+      <rect x="3" y="3" width="7" height="7" rx="1" />
+      <rect x="14" y="3" width="7" height="7" rx="1" />
+      <rect x="3" y="14" width="7" height="7" rx="1" />
+      <rect x="14" y="14" width="7" height="7" rx="1" />
+    </svg>
+  );
+}
+
+export function IconTrending({ size = 20, className, ...props }: IconProps) {
+  return (
+    <svg {...defaults} width={size} height={size} className={className} {...props}>
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+      <polyline points="17 6 23 6 23 12" />
+    </svg>
+  );
+}
+
+export function IconMenu({ size = 20, className, ...props }: IconProps) {
+  return (
+    <svg {...defaults} width={size} height={size} className={className} {...props}>
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  );
+}
+
+export function IconX({ size = 20, className, ...props }: IconProps) {
+  return (
+    <svg {...defaults} width={size} height={size} className={className} {...props}>
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  );
+}
