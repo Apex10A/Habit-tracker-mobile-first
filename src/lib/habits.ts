@@ -1,11 +1,15 @@
 import type { Habit } from '../types/habit';
+import { normalizeHabit } from './habitAppearance';
 
 const HABITS_KEY = 'habit-tracker-habits';
 
 export function getHabits(): Habit[] {
   if (typeof window === 'undefined') return [];
   const habits = localStorage.getItem(HABITS_KEY);
-  return habits ? JSON.parse(habits) : [];
+  if (!habits) return [];
+
+  const parsed = JSON.parse(habits) as Record<string, unknown>[];
+  return parsed.map((habit) => normalizeHabit(habit));
 }
 
 export function saveHabit(habit: Habit): void {

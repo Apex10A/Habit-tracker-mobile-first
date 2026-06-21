@@ -38,10 +38,19 @@ describe('habit form', () => {
     
     fireEvent.change(screen.getByTestId('habit-name-input'), { target: { value: 'New Habit' } });
     fireEvent.change(screen.getByTestId('habit-description-input'), { target: { value: 'Description' } });
+    fireEvent.click(screen.getByTestId('habit-color-pink'));
+    fireEvent.click(screen.getByTestId('habit-emoji-📚'));
     fireEvent.click(screen.getByTestId('habit-save-button'));
 
     expect(screen.getByText('New Habit')).toBeInTheDocument();
     expect(screen.getByText('Description')).toBeInTheDocument();
+    expect(screen.getByTestId('habit-emoji-display-new-habit')).toHaveTextContent('📚');
+
+    const habits = JSON.parse(localStorage.getItem('habit-tracker-habits') || '[]');
+    expect(habits[0]).toMatchObject({
+      color: 'pink',
+      emoji: '📚',
+    });
   });
 
   it('edits an existing habit and preserves immutable fields', async () => {
@@ -51,6 +60,8 @@ describe('habit form', () => {
       name: 'Old Name',
       description: 'Old Desc',
       frequency: 'daily',
+      color: 'green',
+      emoji: '🏃',
       createdAt: '2023-01-01T00:00:00.000Z',
       completions: ['2023-01-01'],
     };
@@ -73,6 +84,8 @@ describe('habit form', () => {
     expect(updatedHabit.userId).toBe('user-1');
     expect(updatedHabit.createdAt).toBe('2023-01-01T00:00:00.000Z');
     expect(updatedHabit.completions).toEqual(['2023-01-01']);
+    expect(updatedHabit.color).toBe('green');
+    expect(updatedHabit.emoji).toBe('🏃');
   });
 
   it('deletes a habit only after explicit confirmation', async () => {
@@ -82,6 +95,8 @@ describe('habit form', () => {
       name: 'Delete Me',
       description: 'Desc',
       frequency: 'daily',
+      color: 'accent',
+      emoji: '',
       createdAt: '2023-01-01',
       completions: [],
     };
@@ -111,6 +126,8 @@ describe('habit form', () => {
       name: 'Streak Habit',
       description: 'Desc',
       frequency: 'daily',
+      color: 'yellow',
+      emoji: '',
       createdAt: '2023-01-01',
       completions: [],
     };
