@@ -11,6 +11,7 @@ import DashboardSkeleton from '@/components/dashboard/DashboardSkeleton';
 import EmptyState from '@/components/dashboard/EmptyState';
 import TodayProgress from '@/components/dashboard/TodayProgress';
 import TodayHabitsList from '@/components/dashboard/TodayHabitsList';
+import WeeklyStatsSummary from '@/components/dashboard/WeeklyStatsSummary';
 import ThemeToggle from '@/components/shared/ThemeToggle';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
@@ -110,6 +111,7 @@ export default function DashboardPage() {
         ) : (
           <>
             <TodayProgress habits={habits} />
+            <WeeklyStatsSummary habits={habits} />
             <TodayHabitsList
               habits={habits}
               onUpdate={() => session && loadHabits(session.userId)}
