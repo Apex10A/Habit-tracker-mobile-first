@@ -11,6 +11,7 @@ type DashboardShellProps = {
   subtitle: string;
   onLogout: () => void;
   onCreateHabit: () => void;
+  testId?: string;
   children: ReactNode;
 };
 
@@ -20,12 +21,13 @@ export default function DashboardShell({
   subtitle,
   onLogout,
   onCreateHabit,
+  testId = 'dashboard-page',
   children,
 }: DashboardShellProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background flex" data-testid="dashboard-page">
+    <div className="min-h-screen bg-background flex" data-testid={testId}>
       <DashboardSidebar
         session={session}
         mobileOpen={mobileOpen}
