@@ -8,6 +8,8 @@ import type { Session } from '@/types/auth';
 import type { Habit } from '@/types/habit';
 import HabitForm from '@/components/habits/HabitForm';
 import HabitCard from '@/components/habits/HabitCard';
+import DashboardSkeleton from '@/components/dashboard/DashboardSkeleton';
+import EmptyState from '@/components/dashboard/EmptyState';
 
 export default function DashboardPage() {
   const [session, setSession] = useState<Session | null>(null);
@@ -54,8 +56,8 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center" data-testid="dashboard-page">
-        <p>Loading...</p>
+      <div data-testid="dashboard-page">
+        <DashboardSkeleton />
       </div>
     );
   }
@@ -98,9 +100,7 @@ export default function DashboardPage() {
         <section className="bg-surface rounded-2xl shadow-md p-6">
           <h2 className="font-display text-xl font-medium mb-4 border-b border-border-base pb-2">Your Habits</h2>
           {habits.length === 0 ? (
-            <div data-testid="empty-state" className="text-secondary-text text-center py-12">
-              <p className="text-lg">No habits yet. Create your first one!</p>
-            </div>
+            <EmptyState onCreateHabit={() => setShowForm(true)} />
           ) : (
             <div className="grid gap-4 md:grid-cols-2">
               {habits.map((habit) => (
