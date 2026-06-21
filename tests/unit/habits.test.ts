@@ -1,4 +1,4 @@
-import { toggleHabitCompletion, getHabits, saveHabit, updateHabit, deleteHabit } from '../../src/lib/habits';
+import { toggleHabitCompletion, getHabits, saveHabit, updateHabit, deleteHabit, getHabitById } from '../../src/lib/habits';
 import type { Habit } from '../../src/types/habit';
 
 const mockHabit: Habit = {
@@ -76,6 +76,18 @@ describe('habits utility', () => {
       deleteHabit(mockHabit.id);
       const stored = JSON.parse(localStorage.getItem('habit-tracker-habits') || '[]');
       expect(stored).toHaveLength(0);
+    });
+  });
+
+  describe('getHabitById', () => {
+    it('returns a habit for the matching user', () => {
+      localStorage.setItem('habit-tracker-habits', JSON.stringify([mockHabit]));
+      expect(getHabitById('1', 'user-1')).toEqual(mockHabit);
+    });
+
+    it('returns null when the habit belongs to another user', () => {
+      localStorage.setItem('habit-tracker-habits', JSON.stringify([mockHabit]));
+      expect(getHabitById('1', 'other-user')).toBeNull();
     });
   });
 });

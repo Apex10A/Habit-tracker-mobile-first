@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Habit } from '@/types/habit';
 import { getHabitSlug } from '@/lib/slug';
 import { calculateCurrentStreak } from '@/lib/streaks';
 import { getLocalDateString } from '@/lib/today';
 import { getHabitColorOption } from '@/lib/habitAppearance';
 import { toggleHabitCompletion, updateHabit, deleteHabit } from '@/lib/habits';
-import { IconEdit, IconTrash } from '@/components/ui/Icon';
+import { IconCalendar, IconEdit, IconTrash } from '@/components/ui/Icon';
 import Button from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
 
@@ -149,6 +150,15 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
           </div>
 
           <div className="mt-4 flex gap-2 justify-end">
+            <Link
+              href={`/habits/${habit.id}`}
+              onClick={(event) => event.stopPropagation()}
+              data-testid={`habit-detail-${slug}`}
+              title="View history"
+              className="inline-flex items-center justify-center p-2.5 rounded-xl text-secondary-text hover:bg-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            >
+              <IconCalendar />
+            </Link>
             <Button
               onClick={(event) => {
                 event.stopPropagation();
