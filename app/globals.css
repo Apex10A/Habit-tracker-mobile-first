@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ==========================================================================
    Design tokens — Behance Habit Tracker style guide
    Typography: Acorn (display) + TT Commons (body)
@@ -157,7 +159,7 @@
   --default-transition-timing-function: var(--ds-ease-default);
 }
 
-.dark {
+html.dark {
   color-scheme: dark;
 
   --ds-background: #141418;

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 };
 
-const themeInitScript = `(function(){try{var t=localStorage.getItem('habit-tracker-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})();`;
+const themeInitScript = `(function(){try{var t=localStorage.getItem('habit-tracker-theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.remove('light','dark');document.documentElement.classList.add(d?'dark':'light')}catch(e){}})();`;
 
 export default function RootLayout({
   children,

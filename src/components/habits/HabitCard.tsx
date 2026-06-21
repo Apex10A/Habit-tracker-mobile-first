@@ -6,6 +6,8 @@ import { getHabitSlug } from '@/lib/slug';
 import { calculateCurrentStreak } from '@/lib/streaks';
 import { toggleHabitCompletion, updateHabit, deleteHabit } from '@/lib/habits';
 import { IconEdit, IconTrash } from '@/components/ui/Icon';
+import Button from '@/components/ui/Button';
+import { cn } from '@/lib/cn';
 
 interface HabitCardProps {
   habit: Habit;
@@ -40,19 +42,17 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
       >
         <p className="text-danger font-medium text-center">Delete this habit?</p>
         <div className="flex gap-2">
-          <button
-            onClick={() => setIsDeleting(false)}
-            className="flex-1 py-2 px-4 bg-background border border-border-base rounded-xl text-secondary-text hover:bg-surface transition-colors"
-          >
+          <Button variant="secondary" fullWidth onClick={() => setIsDeleting(false)}>
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="danger"
+            fullWidth
             onClick={handleConfirmDelete}
             data-testid="confirm-delete-button"
-            className="flex-1 py-2 px-4 bg-danger text-on-accent rounded-xl hover:opacity-90 transition-colors font-medium"
           >
             Delete
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -61,18 +61,20 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
   return (
     <div
       data-testid={`habit-card-${slug}`}
-      className={`p-4 border rounded-2xl shadow-sm transition-all ${
+      className={cn(
+        'p-4 border rounded-2xl shadow-sm transition-all',
         isCompletedToday
           ? 'bg-success-muted/50 border-success/40'
           : 'bg-background border-border-base'
-      }`}
+      )}
     >
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3
-            className={`font-display text-lg font-bold ${
+            className={cn(
+              'font-display text-lg font-bold',
               isCompletedToday ? 'text-success line-through' : 'text-foreground'
-            }`}
+            )}
           >
             {habit.name}
           </h3>
@@ -90,33 +92,33 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
       </div>
 
       <div className="flex gap-2">
-        <button
+        <Button
           onClick={handleToggle}
           data-testid={`habit-complete-${slug}`}
-          className={`flex-1 py-2 px-4 rounded-xl font-medium transition-colors ${
-            isCompletedToday
-              ? 'bg-success text-on-accent hover:opacity-90'
-              : 'bg-pink text-foreground hover:bg-pink-hover'
-          }`}
+          variant={isCompletedToday ? 'success' : 'primary'}
+          fullWidth
         >
           {isCompletedToday ? 'Completed' : 'Complete Today'}
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={onEdit}
           data-testid={`habit-edit-${slug}`}
-          className="p-2.5 text-secondary-text hover:bg-surface rounded-xl transition-colors"
+          variant="ghost"
+          size="icon"
           title="Edit Habit"
         >
           <IconEdit />
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => setIsDeleting(true)}
           data-testid={`habit-delete-${slug}`}
-          className="p-2.5 text-danger hover:bg-danger-muted rounded-xl transition-colors"
+          variant="ghost"
+          size="icon"
+          className="text-danger hover:bg-danger-muted"
           title="Delete Habit"
         >
           <IconTrash />
-        </button>
+        </Button>
       </div>
     </div>
   );

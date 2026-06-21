@@ -4,6 +4,13 @@ import { useState } from 'react';
 import { saveHabit, updateHabit } from '@/lib/habits';
 import { validateHabitName } from '@/lib/validators';
 import type { Habit } from '@/types/habit';
+import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
+import Input from '@/components/ui/Input';
+import Label from '@/components/ui/Label';
+import Modal from '@/components/ui/Modal';
+import Select from '@/components/ui/Select';
+import Textarea from '@/components/ui/Textarea';
 
 interface HabitFormProps {
   userId: string;
@@ -48,75 +55,65 @@ export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: 
       };
       saveHabit(newHabit);
     }
-    
+
     onSuccess();
   };
 
   return (
-    <div className="fixed inset-0 bg-overlay flex items-center justify-center p-4 z-50">
-      <form
-        onSubmit={handleSubmit}
-        data-testid="habit-form"
-        className="bg-surface rounded-2xl shadow-xl p-6 w-full max-w-md flex flex-col gap-4"
-      >
-        <h2 className="font-display text-xl font-bold text-foreground">{habitToEdit ? 'Edit Habit' : 'Create New Habit'}</h2>
-        
-        <div className="flex flex-col gap-1">
-          <label htmlFor="habit-name" className="text-sm font-medium text-foreground">Name</label>
-          <input
-            id="habit-name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            data-testid="habit-name-input"
-            placeholder="E.g., Morning Run"
-            className="border border-border-base p-2.5 rounded-xl focus:ring-2 focus:ring-accent outline-none bg-background text-foreground"
-          />
-          {error && <p className="text-danger text-xs mt-1">{error}</p>}
-        </div>
+    <Modal onClose={onCancel}>
+      <Card padding="md" className="shadow-xl">
+        <form onSubmit={handleSubmit} data-testid="habit-form" className="flex flex-col gap-4">
+          <h2 className="font-display text-xl font-bold text-foreground">
+            {habitToEdit ? 'Edit Habit' : 'Create New Habit'}
+          </h2>
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor="habit-description" className="text-sm font-medium text-foreground">Description (optional)</label>
-          <textarea
-            id="habit-description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            data-testid="habit-description-input"
-            placeholder="Tell us more about it..."
-            className="border border-border-base p-2.5 rounded-xl focus:ring-2 focus:ring-accent outline-none h-24 bg-background text-foreground"
-          />
-        </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="habit-name">Name</Label>
+            <Input
+              id="habit-name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              data-testid="habit-name-input"
+              placeholder="E.g., Morning Run"
+            />
+            {error && <p className="text-danger text-xs mt-1">{error}</p>}
+          </div>
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor="habit-frequency" className="text-sm font-medium text-foreground">Frequency</label>
-          <select
-            id="habit-frequency"
-            value={frequency}
-            onChange={(e) => setFrequency(e.target.value as 'daily')}
-            data-testid="habit-frequency-select"
-            className="border border-border-base p-2.5 rounded-xl focus:ring-2 focus:ring-accent outline-none bg-background text-foreground"
-          >
-            <option value="daily">Daily</option>
-          </select>
-        </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="habit-description">Description (optional)</Label>
+            <Textarea
+              id="habit-description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              data-testid="habit-description-input"
+              placeholder="Tell us more about it..."
+              className="h-24"
+            />
+          </div>
 
-        <div className="flex gap-3 mt-2">
-          <button
-            type="button"
-            onClick={onCancel}
-            className="flex-1 px-4 py-2.5 border border-border-base rounded-xl hover:bg-background transition-colors text-secondary-text"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            data-testid="habit-save-button"
-            className="flex-1 px-4 py-2.5 bg-pink text-foreground rounded-xl hover:bg-pink-hover transition-colors font-medium shadow-pink"
-          >
-            Save Habit
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="habit-frequency">Frequency</Label>
+            <Select
+              id="habit-frequency"
+              value={frequency}
+              onChange={(e) => setFrequency(e.target.value as 'daily')}
+              data-testid="habit-frequency-select"
+            >
+              <option value="daily">Daily</option>
+            </Select>
+          </div>
+
+          <div className="flex gap-3 mt-2">
+            <Button type="button" variant="secondary" fullWidth onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button type="submit" fullWidth data-testid="habit-save-button">
+              Save Habit
+            </Button>
+          </div>
+        </form>
+      </Card>
+    </Modal>
   );
 }
