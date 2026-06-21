@@ -10,6 +10,7 @@ import HabitForm from '@/components/habits/HabitForm';
 import HabitCard from '@/components/habits/HabitCard';
 import DashboardSkeleton from '@/components/dashboard/DashboardSkeleton';
 import EmptyState from '@/components/dashboard/EmptyState';
+import ThemeToggle from '@/components/shared/ThemeToggle';
 
 export default function DashboardPage() {
   const [session, setSession] = useState<Session | null>(null);
@@ -69,7 +70,8 @@ export default function DashboardPage() {
           <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">Dashboard</h1>
           <p className="text-secondary-text text-sm md:text-base">Welcome back, {session?.email}</p>
         </div>
-        <div className="flex gap-2 md:gap-4">
+        <div className="flex gap-2 md:gap-4 items-center">
+          <ThemeToggle />
           <button
             onClick={() => setShowForm(true)}
             data-testid="create-habit-button"
