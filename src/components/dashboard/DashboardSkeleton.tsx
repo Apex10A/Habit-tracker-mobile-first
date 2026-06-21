@@ -1,4 +1,5 @@
 import Skeleton from '@/components/ui/Skeleton';
+import ThemeToggle from '@/components/shared/ThemeToggle';
 
 export default function DashboardSkeleton() {
   return (
@@ -8,7 +9,8 @@ export default function DashboardSkeleton() {
           <Skeleton className="h-9 w-40" />
           <Skeleton className="h-5 w-56" />
         </div>
-        <div className="flex gap-2 md:gap-4">
+        <div className="flex gap-2 md:gap-4 items-center">
+          <ThemeToggle />
           <Skeleton className="h-10 flex-1 md:w-36 md:flex-none" />
           <Skeleton className="h-10 w-24" />
         </div>

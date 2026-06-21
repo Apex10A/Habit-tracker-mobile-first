@@ -157,36 +157,41 @@
   --default-transition-timing-function: var(--ds-ease-default);
 }
 
-/* Force light mode until dark mode lands in a future PR */
-:root {
-  color-scheme: light !important;
-}
+.dark {
+  color-scheme: dark;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ds-background: #FFFDF7 !important;
-    --ds-foreground: #2C2C2C !important;
-    --ds-surface: #F0F4F8 !important;
-    --ds-secondary-text: #6B7280 !important;
-    --ds-border: #E4E9EF !important;
-    --ds-border-strong: #D1D9E0 !important;
-    --ds-pink: #F5BCDD !important;
-    --ds-pink-hover: #EFABD0 !important;
-    --ds-purple: #DFD9F9 !important;
-    --ds-green: #B6C682 !important;
-    --ds-blue: #B9CBEC !important;
-    --ds-yellow: #F5D96E !important;
-    --ds-accent: #9B89C7 !important;
-    --ds-accent-hover: #8574B5 !important;
-    --ds-accent-muted: #DFD9F9 !important;
-    --ds-success: #7A8F4E !important;
-    --ds-success-muted: #B6C682 !important;
-    --ds-danger: #D97070 !important;
-    --ds-danger-muted: #FCE8E8 !important;
-    --ds-streak: #C4A824 !important;
-    --ds-overlay: rgb(44 44 44 / 0.4) !important;
-    --ds-on-accent: #FFFFFF !important;
-  }
+  --ds-background: #141418;
+  --ds-foreground: #F4F4F5;
+  --ds-surface: #1F1F26;
+  --ds-secondary-text: #A1A1AA;
+  --ds-border: #2E2E38;
+  --ds-border-strong: #3F3F4A;
+
+  --ds-pink: #D896B8;
+  --ds-pink-hover: #C985A9;
+  --ds-purple: #3D3555;
+  --ds-green: #3D4530;
+  --ds-blue: #2E3A4F;
+  --ds-yellow: #4A4228;
+
+  --ds-accent: #B8A8E0;
+  --ds-accent-hover: #A896D4;
+  --ds-accent-muted: #2A2438;
+  --ds-success: #9CB072;
+  --ds-success-muted: #2A3320;
+  --ds-danger: #E08A8A;
+  --ds-danger-muted: #3A2222;
+  --ds-streak: #E5C04A;
+
+  --ds-overlay: rgb(0 0 0 / 0.65);
+  --ds-on-accent: #FFFFFF;
+
+  --ds-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.25);
+  --ds-shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.35);
+  --ds-shadow-lg: 0 12px 24px -4px rgb(0 0 0 / 0.4);
+  --ds-shadow-xl: 0 20px 40px -8px rgb(0 0 0 / 0.45);
+  --ds-shadow-pink: 0 8px 20px -4px rgb(216 150 184 / 0.25);
+  --ds-shadow-accent: 0 8px 20px -4px rgb(184 168 224 / 0.2);
 }
 
 @layer base {
