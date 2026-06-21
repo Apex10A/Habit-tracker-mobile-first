@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
-import { Gabarito } from "next/font/google";
+import localFont from "next/font/local";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import ServiceWorkerRegister from "@/components/shared/ServiceWorkerRegister";
 
-const gabarito = Gabarito({
-  variable: "--font-gabarito",
+const acorn = localFont({
+  src: [
+    { path: "./fonts/acorn-regular.woff", weight: "400", style: "normal" },
+    { path: "./fonts/acorn-medium.woff", weight: "500", style: "normal" },
+    { path: "./fonts/acorn-7.woff", weight: "700", style: "normal" },
+  ],
+  variable: "--font-acorn",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -22,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={` ${gabarito.variable} h-full antialiased`}
+      className={`${acorn.variable} ${dmSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <ServiceWorkerRegister />

@@ -30,7 +30,7 @@ export default function LoginForm() {
   return (
     <div className="w-full max-w-md space-y-8 p-8 bg-surface rounded-2xl shadow-xl border border-border-base">
       <div className="text-center">
-        <h2 className="text-3xl font-extrabold text-foreground">Welcome Back</h2>
+        <h2 className="font-display text-3xl font-bold text-foreground">Welcome Back</h2>
         <p className="mt-2 text-sm text-secondary-text">Please enter your details to sign in</p>
       </div>
 
@@ -51,10 +51,7 @@ export default function LoginForm() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <div className="flex justify-between items-center ml-1">
-              <label htmlFor="password" title="password" className="text-sm font-semibold text-foreground">Password</label>
-              <a href="#" className="text-xs font-medium text-accent hover:underline">Forgot password?</a>
-            </div>
+            <label htmlFor="password" title="password" className="text-sm font-semibold text-foreground ml-1">Password</label>
             <input
               id="password"
               type="password"
@@ -69,7 +66,7 @@ export default function LoginForm() {
         </div>
 
         {error && (
-          <div className="p-3 rounded-lg bg-danger/10 border border-danger/20">
+          <div className="p-3 rounded-xl bg-danger-muted border border-danger/20">
             <p className="text-danger text-xs font-medium text-center">{error}</p>
           </div>
         )}
@@ -77,7 +74,7 @@ export default function LoginForm() {
         <button
           type="submit"
           data-testid="auth-login-submit"
-          className="w-full bg-accent text-white py-3.5 rounded-xl hover:bg-accent/90 active:scale-[0.98] transition-all font-bold shadow-lg shadow-accent/20"
+          className="w-full bg-pink text-foreground py-3.5 rounded-xl hover:bg-pink-hover active:scale-[0.98] transition-all font-bold shadow-pink"
         >
           Sign In
         </button>

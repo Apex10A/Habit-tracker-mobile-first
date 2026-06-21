@@ -30,7 +30,7 @@ export default function SignupForm() {
   return (
     <div className="w-full max-w-md space-y-8 p-8 bg-surface rounded-2xl shadow-xl border border-border-base">
       <div className="text-center">
-        <h2 className="text-3xl font-extrabold text-foreground">Create Account</h2>
+        <h2 className="font-display text-3xl font-bold text-foreground">Create Account</h2>
         <p className="mt-2 text-sm text-secondary-text">Start your habit tracking journey today</p>
       </div>
 
@@ -67,7 +67,7 @@ export default function SignupForm() {
         </div>
 
         {error && (
-          <div className="p-3 rounded-lg bg-danger/10 border border-danger/20">
+          <div className="p-3 rounded-xl bg-danger-muted border border-danger/20">
             <p className="text-danger text-xs font-medium text-center">{error}</p>
           </div>
         )}
@@ -75,7 +75,7 @@ export default function SignupForm() {
         <button
           type="submit"
           data-testid="auth-signup-submit"
-          className="w-full bg-accent text-white py-3.5 rounded-xl hover:bg-accent/90 active:scale-[0.98] transition-all font-bold shadow-lg shadow-accent/20"
+          className="w-full bg-pink text-foreground py-3.5 rounded-xl hover:bg-pink-hover active:scale-[0.98] transition-all font-bold shadow-pink"
         >
           Create Account
         </button>

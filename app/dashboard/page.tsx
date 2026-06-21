@@ -64,21 +64,21 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-background p-4 md:p-8" data-testid="dashboard-page">
       <header className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center mb-8 max-w-4xl mx-auto">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Dashboard</h1>
-          <p className="text-secondary-text text-sm md:text-base">Welcome back, {session?.email} 👋</p>
+          <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">Dashboard</h1>
+          <p className="text-secondary-text text-sm md:text-base">Welcome back, {session?.email}</p>
         </div>
         <div className="flex gap-2 md:gap-4">
           <button
             onClick={() => setShowForm(true)}
             data-testid="create-habit-button"
-            className="flex-1 md:flex-none bg-accent text-white px-4 py-2 rounded-lg hover:opacity-90 transition-colors font-medium text-sm md:text-base focus:ring-2 focus:ring-accent focus:ring-offset-2 outline-none"
+            className="flex-1 md:flex-none bg-pink text-foreground px-4 py-2.5 rounded-xl hover:bg-pink-hover transition-colors font-medium text-sm md:text-base shadow-pink focus:ring-2 focus:ring-pink focus:ring-offset-2 outline-none"
           >
             Create Habit
           </button>
           <button
             onClick={handleLogout}
             data-testid="auth-logout-button"
-            className="bg-danger/10 text-danger px-4 py-2 rounded-lg hover:bg-danger/20 transition-colors text-sm md:text-base font-medium focus:ring-2 focus:ring-danger focus:ring-offset-2 outline-none"
+            className="bg-danger-muted text-danger px-4 py-2.5 rounded-xl hover:bg-danger/20 transition-colors text-sm md:text-base font-medium focus:ring-2 focus:ring-danger focus:ring-offset-2 outline-none"
           >
             Logout
           </button>
@@ -95,10 +95,10 @@ export default function DashboardPage() {
       )}
 
       <main className="max-w-4xl mx-auto">
-        <section className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4 border-b pb-2">Your Habits</h2>
+        <section className="bg-surface rounded-2xl shadow-md p-6">
+          <h2 className="font-display text-xl font-medium mb-4 border-b border-border-base pb-2">Your Habits</h2>
           {habits.length === 0 ? (
-            <div data-testid="empty-state" className="text-gray-500 text-center py-12">
+            <div data-testid="empty-state" className="text-secondary-text text-center py-12">
               <p className="text-lg">No habits yet. Create your first one!</p>
             </div>
           ) : (
