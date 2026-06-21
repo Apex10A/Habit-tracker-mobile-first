@@ -10,16 +10,19 @@ const features = [
     title: 'Streaks that motivate',
     description:
       'Complete habits daily and watch your streak grow. Consistency becomes visible—and harder to break.',
+    tint: 'bg-pink/40',
   },
   {
     title: 'Always within reach',
     description:
       'Install as a PWA on your phone or desktop. Your habit list loads instantly, even without a connection.',
+    tint: 'bg-blue/40',
   },
   {
     title: 'Your data stays yours',
     description:
       'Everything lives in your browser. Sign up when you are ready to save progress across sessions.',
+    tint: 'bg-green/40',
   },
 ];
 
@@ -50,9 +53,9 @@ export default function LandingPage() {
 
   return (
     <div data-testid="landing-page" className="min-h-screen flex flex-col">
-      <header className="border-b border-border-base bg-surface/80 backdrop-blur-sm sticky top-0 z-10">
+      <header className="border-b border-border-base bg-background/90 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="text-lg font-bold tracking-tight text-foreground">
+          <Link href="/" className="font-display text-lg font-extrabold tracking-tight text-foreground">
             Habit Tracker
           </Link>
           <nav className="flex items-center gap-2 md:gap-3">
@@ -60,7 +63,7 @@ export default function LandingPage() {
               <Link
                 href="/dashboard"
                 data-testid="landing-dashboard-link"
-                className="px-4 py-2 rounded-lg bg-accent text-on-accent font-medium text-sm hover:bg-accent-hover transition-colors"
+                className="px-4 py-2 rounded-xl bg-pink text-foreground font-medium text-sm hover:bg-pink-hover transition-colors shadow-pink"
               >
                 Dashboard
               </Link>
@@ -69,14 +72,14 @@ export default function LandingPage() {
                 <Link
                   href="/login"
                   data-testid="landing-login-link"
-                  className="px-4 py-2 rounded-lg text-secondary-text font-medium text-sm hover:text-foreground transition-colors"
+                  className="px-4 py-2 rounded-xl text-secondary-text font-medium text-sm hover:text-foreground transition-colors"
                 >
                   Log in
                 </Link>
                 <Link
                   href="/signup"
                   data-testid="landing-signup-link"
-                  className="px-4 py-2 rounded-lg bg-accent text-on-accent font-medium text-sm hover:bg-accent-hover transition-colors"
+                  className="px-4 py-2 rounded-xl bg-pink text-foreground font-medium text-sm hover:bg-pink-hover transition-colors shadow-pink"
                 >
                   Get started
                 </Link>
@@ -90,11 +93,15 @@ export default function LandingPage() {
         <section className="relative overflow-hidden">
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-b from-accent-muted via-background to-background"
+            className="absolute inset-0 bg-gradient-to-br from-purple/30 via-background to-pink/20"
           />
           <div
             aria-hidden
-            className="absolute top-0 right-0 w-[min(100%,36rem)] h-[min(100%,28rem)] bg-accent/5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/4"
+            className="absolute top-10 right-0 w-72 h-72 bg-blue/30 rounded-full blur-3xl"
+          />
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 w-64 h-64 bg-yellow/30 rounded-full blur-3xl"
           />
 
           <div className="relative max-w-5xl mx-auto px-4 md:px-8 pt-16 pb-20 md:pt-24 md:pb-28">
@@ -103,7 +110,7 @@ export default function LandingPage() {
                 <p className="text-sm font-semibold text-accent uppercase tracking-wide mb-4">
                   Offline-first habit tracking
                 </p>
-                <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-foreground leading-[1.1] tracking-tight">
+                <h1 className="font-display text-4xl md:text-5xl lg:text-[3.25rem] font-bold text-foreground leading-[1.1] tracking-tight">
                   Build habits that{' '}
                   <span className="text-accent">actually stick</span>
                 </h1>
@@ -115,13 +122,13 @@ export default function LandingPage() {
                   <Link
                     href={session ? '/dashboard' : '/signup'}
                     data-testid="landing-hero-cta"
-                    className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-accent text-on-accent font-semibold shadow-accent hover:bg-accent-hover transition-colors"
+                    className="inline-flex items-center justify-center px-6 py-3.5 rounded-2xl bg-pink text-foreground font-semibold shadow-pink hover:bg-pink-hover transition-colors"
                   >
                     {session ? 'Open dashboard' : 'Start for free'}
                   </Link>
                   <Link
                     href="/login"
-                    className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl border border-border-base bg-surface text-foreground font-semibold hover:border-border-strong transition-colors"
+                    className="inline-flex items-center justify-center px-6 py-3.5 rounded-2xl border border-border-base bg-surface text-foreground font-semibold hover:border-border-strong transition-colors"
                   >
                     I already have an account
                   </Link>
@@ -134,7 +141,7 @@ export default function LandingPage() {
                     Today
                   </p>
                   <div className="space-y-3">
-                    <div className="rounded-xl border border-success bg-success-muted p-4">
+                    <div className="rounded-xl border border-success/30 bg-success-muted/60 p-4">
                       <div className="flex justify-between items-start gap-4">
                         <div>
                           <p className="font-bold text-success line-through">Morning run</p>
@@ -143,7 +150,7 @@ export default function LandingPage() {
                         <p className="text-xl font-bold text-streak whitespace-nowrap">12 streak</p>
                       </div>
                     </div>
-                    <div className="rounded-xl border border-border-base bg-background p-4">
+                    <div className="rounded-xl border border-border-base bg-purple/30 p-4">
                       <div className="flex justify-between items-start gap-4">
                         <div>
                           <p className="font-bold text-foreground">Read 20 pages</p>
@@ -152,7 +159,7 @@ export default function LandingPage() {
                         <p className="text-xl font-bold text-streak whitespace-nowrap">5 streak</p>
                       </div>
                     </div>
-                    <div className="rounded-xl border border-border-base bg-background p-4 opacity-60">
+                    <div className="rounded-xl border border-border-base bg-blue/30 p-4 opacity-80">
                       <div className="flex justify-between items-start gap-4">
                         <div>
                           <p className="font-bold text-foreground">Drink water</p>
@@ -168,10 +175,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="border-t border-border-base bg-surface">
+        <section className="border-t border-border-base bg-surface/50">
           <div className="max-w-5xl mx-auto px-4 md:px-8 py-16 md:py-20">
             <div className="max-w-2xl mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground tracking-tight">
                 Simple by design
               </h2>
               <p className="mt-3 text-secondary-text text-lg leading-relaxed">
@@ -183,9 +190,9 @@ export default function LandingPage() {
               {features.map((feature) => (
                 <article
                   key={feature.title}
-                  className="rounded-xl border border-border-base p-6 bg-background"
+                  className={`rounded-2xl border border-border-base p-6 ${feature.tint}`}
                 >
-                  <h3 className="text-lg font-bold text-foreground">{feature.title}</h3>
+                  <h3 className="font-display text-lg font-bold text-foreground">{feature.title}</h3>
                   <p className="mt-3 text-secondary-text leading-relaxed">{feature.description}</p>
                 </article>
               ))}
@@ -195,14 +202,14 @@ export default function LandingPage() {
 
         <section className="border-t border-border-base">
           <div className="max-w-5xl mx-auto px-4 md:px-8 py-16 md:py-20">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-12">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-12">
               How it works
             </h2>
             <ol className="grid md:grid-cols-3 gap-10 md:gap-8">
               {steps.map((item) => (
                 <li key={item.step}>
                   <p className="text-sm font-bold text-accent tabular-nums">{item.step}</p>
-                  <h3 className="mt-2 text-lg font-bold text-foreground">{item.title}</h3>
+                  <h3 className="font-display mt-2 text-lg font-bold text-foreground">{item.title}</h3>
                   <p className="mt-2 text-secondary-text leading-relaxed">{item.body}</p>
                 </li>
               ))}
@@ -210,9 +217,9 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="border-t border-border-base bg-accent-muted">
+        <section className="border-t border-border-base bg-purple/30">
           <div className="max-w-5xl mx-auto px-4 md:px-8 py-16 md:py-20 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground tracking-tight">
               Ready to build better days?
             </h2>
             <p className="mt-4 text-secondary-text text-lg max-w-xl mx-auto leading-relaxed">
@@ -221,7 +228,7 @@ export default function LandingPage() {
             </p>
             <Link
               href={session ? '/dashboard' : '/signup'}
-              className="inline-flex items-center justify-center mt-8 px-8 py-3.5 rounded-xl bg-accent text-on-accent font-semibold shadow-accent hover:bg-accent-hover transition-colors"
+              className="inline-flex items-center justify-center mt-8 px-8 py-3.5 rounded-2xl bg-pink text-foreground font-semibold shadow-pink hover:bg-pink-hover transition-colors"
             >
               {session ? 'Go to dashboard' : 'Create your account'}
             </Link>

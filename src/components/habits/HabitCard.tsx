@@ -5,6 +5,7 @@ import { Habit } from '@/types/habit';
 import { getHabitSlug } from '@/lib/slug';
 import { calculateCurrentStreak } from '@/lib/streaks';
 import { toggleHabitCompletion, updateHabit, deleteHabit } from '@/lib/habits';
+import { IconEdit, IconTrash } from '@/components/ui/Icon';
 
 interface HabitCardProps {
   habit: Habit;
@@ -35,20 +36,20 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
     return (
       <div
         data-testid={`habit-card-${slug}`}
-        className="p-4 border border-danger bg-red-50 rounded-lg shadow-sm flex flex-col gap-4"
+        className="p-4 border border-danger/30 bg-danger-muted rounded-2xl shadow-sm flex flex-col gap-4"
       >
         <p className="text-danger font-medium text-center">Delete this habit?</p>
         <div className="flex gap-2">
           <button
             onClick={() => setIsDeleting(false)}
-            className="flex-1 py-2 px-4 bg-surface border border-border-base rounded text-secondary-text hover:bg-background transition-colors"
+            className="flex-1 py-2 px-4 bg-background border border-border-base rounded-xl text-secondary-text hover:bg-surface transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={handleConfirmDelete}
             data-testid="confirm-delete-button"
-            className="flex-1 py-2 px-4 bg-danger text-white rounded hover:opacity-90 transition-colors font-medium"
+            className="flex-1 py-2 px-4 bg-danger text-on-accent rounded-xl hover:opacity-90 transition-colors font-medium"
           >
             Delete
           </button>
@@ -60,14 +61,16 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
   return (
     <div
       data-testid={`habit-card-${slug}`}
-      className={`p-4 border rounded-lg shadow-sm transition-all ${
-        isCompletedToday ? 'bg-green-50 border-success' : 'bg-surface border-border-base'
+      className={`p-4 border rounded-2xl shadow-sm transition-all ${
+        isCompletedToday
+          ? 'bg-success-muted/50 border-success/40'
+          : 'bg-background border-border-base'
       }`}
     >
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3
-            className={`text-lg font-bold ${
+            className={`font-display text-lg font-bold ${
               isCompletedToday ? 'text-success line-through' : 'text-foreground'
             }`}
           >
@@ -78,11 +81,11 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
         <div className="flex flex-col items-end">
           <span
             data-testid={`habit-streak-${slug}`}
-            className="text-2xl font-bold text-orange-500"
+            className="text-2xl font-bold text-streak"
           >
             {streak}🔥
           </span>
-          <span className="text-xs text-secondary-text uppercase tracking-wider">Streak</span>
+          <span className="text-xs text-secondary-text uppercase tracking-wide">Streak</span>
         </div>
       </div>
 
@@ -90,10 +93,10 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
         <button
           onClick={handleToggle}
           data-testid={`habit-complete-${slug}`}
-          className={`flex-1 py-2 px-4 rounded font-medium transition-colors ${
+          className={`flex-1 py-2 px-4 rounded-xl font-medium transition-colors ${
             isCompletedToday
-              ? 'bg-success text-white hover:opacity-90'
-              : 'bg-accent text-white hover:opacity-90'
+              ? 'bg-success text-on-accent hover:opacity-90'
+              : 'bg-pink text-foreground hover:bg-pink-hover'
           }`}
         >
           {isCompletedToday ? 'Completed' : 'Complete Today'}
@@ -101,44 +104,18 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
         <button
           onClick={onEdit}
           data-testid={`habit-edit-${slug}`}
-          className="p-2 text-secondary-text hover:bg-background rounded transition-colors"
+          className="p-2.5 text-secondary-text hover:bg-surface rounded-xl transition-colors"
           title="Edit Habit"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-            />
-          </svg>
+          <IconEdit />
         </button>
         <button
           onClick={() => setIsDeleting(true)}
           data-testid={`habit-delete-${slug}`}
-          className="p-2 text-danger hover:bg-red-50 rounded transition-colors"
+          className="p-2.5 text-danger hover:bg-danger-muted rounded-xl transition-colors"
           title="Delete Habit"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-            />
-          </svg>
+          <IconTrash />
         </button>
       </div>
     </div>

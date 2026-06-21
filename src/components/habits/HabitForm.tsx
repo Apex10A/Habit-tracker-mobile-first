@@ -53,13 +53,13 @@ export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: 
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 bg-overlay flex items-center justify-center p-4 z-50">
       <form
         onSubmit={handleSubmit}
         data-testid="habit-form"
-        className="bg-surface rounded-lg shadow-xl p-6 w-full max-w-md flex flex-col gap-4"
+        className="bg-surface rounded-2xl shadow-xl p-6 w-full max-w-md flex flex-col gap-4"
       >
-        <h2 className="text-xl font-bold text-foreground">{habitToEdit ? 'Edit Habit' : 'Create New Habit'}</h2>
+        <h2 className="font-display text-xl font-bold text-foreground">{habitToEdit ? 'Edit Habit' : 'Create New Habit'}</h2>
         
         <div className="flex flex-col gap-1">
           <label htmlFor="habit-name" className="text-sm font-medium text-foreground">Name</label>
@@ -70,7 +70,7 @@ export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: 
             onChange={(e) => setName(e.target.value)}
             data-testid="habit-name-input"
             placeholder="E.g., Morning Run"
-            className="border border-border-base p-2 rounded focus:ring-2 focus:ring-accent outline-none bg-surface text-foreground"
+            className="border border-border-base p-2.5 rounded-xl focus:ring-2 focus:ring-accent outline-none bg-background text-foreground"
           />
           {error && <p className="text-danger text-xs mt-1">{error}</p>}
         </div>
@@ -83,7 +83,7 @@ export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: 
             onChange={(e) => setDescription(e.target.value)}
             data-testid="habit-description-input"
             placeholder="Tell us more about it..."
-            className="border border-border-base p-2 rounded focus:ring-2 focus:ring-accent outline-none h-24 bg-surface text-foreground"
+            className="border border-border-base p-2.5 rounded-xl focus:ring-2 focus:ring-accent outline-none h-24 bg-background text-foreground"
           />
         </div>
 
@@ -94,7 +94,7 @@ export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: 
             value={frequency}
             onChange={(e) => setFrequency(e.target.value as 'daily')}
             data-testid="habit-frequency-select"
-            className="border border-border-base p-2 rounded focus:ring-2 focus:ring-accent outline-none bg-surface text-foreground"
+            className="border border-border-base p-2.5 rounded-xl focus:ring-2 focus:ring-accent outline-none bg-background text-foreground"
           >
             <option value="daily">Daily</option>
           </select>
@@ -104,14 +104,14 @@ export default function HabitForm({ userId, onSuccess, onCancel, habitToEdit }: 
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 px-4 py-2 border border-border-base rounded hover:bg-background transition-colors text-secondary-text"
+            className="flex-1 px-4 py-2.5 border border-border-base rounded-xl hover:bg-background transition-colors text-secondary-text"
           >
             Cancel
           </button>
           <button
             type="submit"
             data-testid="habit-save-button"
-            className="flex-1 px-4 py-2 bg-accent text-white rounded hover:opacity-90 transition-colors font-medium"
+            className="flex-1 px-4 py-2.5 bg-pink text-foreground rounded-xl hover:bg-pink-hover transition-colors font-medium shadow-pink"
           >
             Save Habit
           </button>
