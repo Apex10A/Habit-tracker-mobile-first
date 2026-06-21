@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Habit } from '@/types/habit';
 import { getHabitSlug } from '@/lib/slug';
 import { calculateCurrentStreak } from '@/lib/streaks';
+import { getLocalDateString } from '@/lib/today';
 import { toggleHabitCompletion, updateHabit, deleteHabit } from '@/lib/habits';
 import { IconEdit, IconTrash } from '@/components/ui/Icon';
 import Button from '@/components/ui/Button';
@@ -18,9 +19,9 @@ interface HabitCardProps {
 export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const slug = getHabitSlug(habit.name);
-  const today = new Date().toISOString().split('T')[0];
+  const today = getLocalDateString();
   const isCompletedToday = habit.completions.includes(today);
-  const streak = calculateCurrentStreak(habit.completions);
+  const streak = calculateCurrentStreak(habit.completions, today);
 
   const handleToggle = () => {
     const updatedHabit = toggleHabitCompletion(habit, today);
@@ -61,64 +62,103 @@ export default function HabitCard({ habit, onUpdate, onEdit }: HabitCardProps) {
   return (
     <div
       data-testid={`habit-card-${slug}`}
+      role="button"
+      tabIndex={0}
+      onClick={handleToggle}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          handleToggle();
+        }
+      }}
+      aria-pressed={isCompletedToday}
+      aria-label={`${habit.name}, ${isCompletedToday ? 'completed today' : 'not completed today'}. Tap to toggle.`}
       className={cn(
-        'p-4 border rounded-2xl shadow-sm transition-all',
+        'p-4 border rounded-2xl shadow-sm transition-all cursor-pointer select-none',
+        'hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
         isCompletedToday
           ? 'bg-success-muted/50 border-success/40'
-          : 'bg-background border-border-base'
+          : 'bg-background border-border-base hover:border-accent/40'
       )}
     >
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <h3
-            className={cn(
-              'font-display text-lg font-bold',
-              isCompletedToday ? 'text-success line-through' : 'text-foreground'
-            )}
-          >
-            {habit.name}
-          </h3>
-          <p className="text-sm text-secondary-text">{habit.description}</p>
-        </div>
-        <div className="flex flex-col items-end">
-          <span
-            data-testid={`habit-streak-${slug}`}
-            className="text-2xl font-bold text-streak"
-          >
-            {streak}🔥
-          </span>
-          <span className="text-xs text-secondary-text uppercase tracking-wide">Streak</span>
-        </div>
-      </div>
-
-      <div className="flex gap-2">
-        <Button
-          onClick={handleToggle}
+      <div className="flex items-start gap-3">
+        <div
           data-testid={`habit-complete-${slug}`}
-          variant={isCompletedToday ? 'success' : 'primary'}
-          fullWidth
+          className={cn(
+            'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors',
+            isCompletedToday
+              ? 'border-success bg-success text-on-accent'
+              : 'border-border-strong bg-surface'
+          )}
+          aria-hidden="true"
         >
-          {isCompletedToday ? 'Completed' : 'Complete Today'}
-        </Button>
-        <Button
-          onClick={onEdit}
-          data-testid={`habit-edit-${slug}`}
-          variant="ghost"
-          size="icon"
-          title="Edit Habit"
-        >
-          <IconEdit />
-        </Button>
-        <Button
-          onClick={() => setIsDeleting(true)}
-          data-testid={`habit-delete-${slug}`}
-          variant="ghost"
-          size="icon"
-          className="text-danger hover:bg-danger-muted"
-          title="Delete Habit"
-        >
-          <IconTrash />
-        </Button>
+          {isCompletedToday && (
+            <svg viewBox="0 0 12 12" className="h-3.5 w-3.5" fill="none">
+              <path
+                d="M2.5 6l2.5 2.5 4.5-5"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          )}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <div className="flex justify-between items-start gap-2">
+            <div className="min-w-0">
+              <h3
+                className={cn(
+                  'font-display text-lg font-bold truncate',
+                  isCompletedToday ? 'text-success line-through' : 'text-foreground'
+                )}
+              >
+                {habit.name}
+              </h3>
+              {habit.description ? (
+                <p className="text-sm text-secondary-text line-clamp-2">{habit.description}</p>
+              ) : null}
+            </div>
+            <div className="flex flex-col items-end shrink-0">
+              <span
+                data-testid={`habit-streak-${slug}`}
+                className="text-2xl font-bold text-streak"
+              >
+                {streak}🔥
+              </span>
+              <span className="text-xs text-secondary-text uppercase tracking-wide">Streak</span>
+            </div>
+          </div>
+
+          <div className="mt-4 flex gap-2 justify-end">
+            <Button
+              onClick={(event) => {
+                event.stopPropagation();
+                onEdit();
+              }}
+              data-testid={`habit-edit-${slug}`}
+              variant="ghost"
+              size="icon"
+              title="Edit Habit"
+            >
+              <IconEdit />
+            </Button>
+            <Button
+              onClick={(event) => {
+                event.stopPropagation();
+                setIsDeleting(true);
+              }}
+              data-testid={`habit-delete-${slug}`}
+              variant="ghost"
+              size="icon"
+              className="text-danger hover:bg-danger-muted"
+              title="Delete Habit"
+            >
+              <IconTrash />
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -17,12 +17,22 @@ export default function DashboardSkeleton() {
       </header>
 
       <main className="max-w-4xl mx-auto">
-        <section className="bg-surface rounded-2xl shadow-md p-6">
-          <Skeleton className="h-7 w-32 mb-6" />
+        <section className="bg-surface rounded-2xl shadow-md p-6 mb-6">
+          <div className="flex items-center gap-6">
+            <Skeleton className="h-[88px] w-[88px] rounded-full shrink-0" />
+            <div className="space-y-3 flex-1">
+              <Skeleton className="h-4 w-16" />
+              <Skeleton className="h-8 w-48" />
+              <Skeleton className="h-5 w-40" />
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <Skeleton className="h-6 w-28 mb-3" />
           <div className="grid gap-4 md:grid-cols-2">
             <Skeleton className="h-36" />
             <Skeleton className="h-36" />
-            <Skeleton className="h-36 md:col-span-2 md:max-w-[calc(50%-0.5rem)]" />
           </div>
         </section>
       </main>

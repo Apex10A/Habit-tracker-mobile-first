@@ -7,9 +7,10 @@ import { getHabits } from '@/lib/habits';
 import type { Session } from '@/types/auth';
 import type { Habit } from '@/types/habit';
 import HabitForm from '@/components/habits/HabitForm';
-import HabitCard from '@/components/habits/HabitCard';
 import DashboardSkeleton from '@/components/dashboard/DashboardSkeleton';
 import EmptyState from '@/components/dashboard/EmptyState';
+import TodayProgress from '@/components/dashboard/TodayProgress';
+import TodayHabitsList from '@/components/dashboard/TodayHabitsList';
 import ThemeToggle from '@/components/shared/ThemeToggle';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
@@ -102,25 +103,20 @@ export default function DashboardPage() {
       )}
 
       <main className="max-w-4xl mx-auto">
-        <Card padding="md">
-          <h2 className="font-display text-xl font-medium mb-4 border-b border-border-base pb-2">
-            Your Habits
-          </h2>
-          {habits.length === 0 ? (
+        {habits.length === 0 ? (
+          <Card padding="md">
             <EmptyState onCreateHabit={() => setShowForm(true)} />
-          ) : (
-            <div className="grid gap-4 md:grid-cols-2">
-              {habits.map((habit) => (
-                <HabitCard
-                  key={habit.id}
-                  habit={habit}
-                  onUpdate={() => session && loadHabits(session.userId)}
-                  onEdit={() => setEditingHabit(habit)}
-                />
-              ))}
-            </div>
-          )}
-        </Card>
+          </Card>
+        ) : (
+          <>
+            <TodayProgress habits={habits} />
+            <TodayHabitsList
+              habits={habits}
+              onUpdate={() => session && loadHabits(session.userId)}
+              onEdit={setEditingHabit}
+            />
+          </>
+        )}
       </main>
     </div>
   );
